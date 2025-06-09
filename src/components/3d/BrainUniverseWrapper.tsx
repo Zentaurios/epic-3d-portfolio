@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { BrainUniverse } from './BrainUniverse'
+import { OptimizedBrain } from './OptimizedBrain'
 import { ScrollCamera, ModernLighting } from './ModernCamera'
 import { useNavigationManager, useBrainActivity } from '@/lib/hooks/useNavigationManager'
 import { useScrollProgress } from '@/lib/hooks/useScrollProgress'
@@ -131,10 +131,16 @@ export function BrainUniverseWrapper({ children }: BrainUniverseWrapperProps) {
             />
             
             {/* Main Brain Universe Scene */}
-            <BrainUniverse
-              scrollProgress={scrollProgress}
-              currentRoute={navigationState.currentRoute}
-              isTransitioning={navigationState.isTransitioning}
+            <OptimizedBrain
+              brainActivity={{
+                neural: scrollProgress,
+                synaptic: Math.abs(scrollVelocity),
+                cognitive: navigationState.isTransitioning ? 1 : 0.5
+              }}
+              scale={1}
+              animated={true}
+              opacity={0.8}
+              quality="high"
             />
 
           </Canvas>

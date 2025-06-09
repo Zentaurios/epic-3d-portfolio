@@ -208,7 +208,7 @@ function AnatomicalMesh({
   animationSpeed?: number
 }) {
   const meshRef = useRef<THREE.Mesh>(null!)
-  const originalVertices = useRef<Float32Array>()
+  const originalVertices = useRef<Float32Array | undefined>(undefined)
   
   useEffect(() => {
     if (geometry && !originalVertices.current) {
