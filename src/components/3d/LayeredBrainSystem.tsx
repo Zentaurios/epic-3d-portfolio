@@ -90,7 +90,7 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
                 animated={true}
                 opacity={0.4}
                 quality="medium"
-                animationSpeed={0.05} // VERY SLOW 3D brain animation
+                animationSpeed={0.2} // VERY SLOW 3D brain animation
               />
             </group>
           </Canvas>
