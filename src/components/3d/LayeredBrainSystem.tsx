@@ -1,15 +1,12 @@
 'use client'
 
-import { Suspense, useRef, useMemo } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Suspense, useRef } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { PerspectiveCamera } from '@react-three/drei'
 import * as THREE from 'three'
 import { VictorStyleBrain, useVictorBrainActivity } from './VictorStyleBrain'
-import { FixedSpeedNeuralOverlay } from './FixedSpeedNeuralOverlay'
 import { useNavigationManager } from '@/lib/hooks/useNavigationManager'
 import { useScrollProgress } from '@/lib/hooks/useScrollProgress'
-import { useScrollVelocity } from '@/lib/hooks/useScrollVelocity'
-import { BRAIN_COLORS } from '@/lib/utils/constants'
 
 interface LayeredBrainSystemProps {
   children?: React.ReactNode
@@ -86,7 +83,6 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
   })
   
   const { scrollProgress } = useScrollProgress()
-  const { scrollVelocity } = useScrollVelocity()
   const brainActivity = useVictorBrainActivity(0.05) // VERY SLOW brain activity hook
   
   const currentRegion = navigationState.brainRegion || 'consciousness'
@@ -131,16 +127,6 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
             </group>
           </Canvas>
         </Suspense>
-      </div>
-
-      {/* Neural Network Overlay - 2D complement to 3D brain */}
-      <div className="fixed inset-0 z-[1]">
-        <FixedSpeedNeuralOverlay
-          brainActivity={brainActivity}
-          currentRegion={currentRegion as 'consciousness' | 'memory' | 'creativity' | 'logic'}
-          opacity={0.25}
-          enabled={true} // Fixed slow speed - no animationSpeed needed
-        />
       </div>
 
       {/* Content Layer - Your page content goes here */}

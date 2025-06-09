@@ -9,9 +9,10 @@ import type { BlogPost } from '@/types'
 
 interface BlogGridProps {
   initialPosts: BlogPost[]
+  isLoading?: boolean
 }
 
-export function BlogGrid({ initialPosts }: BlogGridProps) {
+export function BlogGrid({ initialPosts, isLoading = false }: BlogGridProps) {
   const [posts] = useState<BlogPost[]>(initialPosts)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
@@ -45,6 +46,11 @@ export function BlogGrid({ initialPosts }: BlogGridProps) {
                            post.categories?.some(cat => cat?.title === selectedCategory) || false
     return matchesSearch && matchesCategory
   })
+
+  // Show loading skeleton while loading
+  if (isLoading) {
+    return <BlogGridSkeleton />
+  }
 
   // Show empty state if no posts
   if (posts.length === 0) {
@@ -256,7 +262,7 @@ export function BlogGrid({ initialPosts }: BlogGridProps) {
 }
 
 // Loading skeleton component
-function BlogGridSkeleton() {
+export function BlogGridSkeleton() {
   return (
     <section className="px-8 py-16">
       <div className="mx-auto max-w-7xl">

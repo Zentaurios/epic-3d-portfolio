@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Calendar, Clock, Eye, ArrowLeft, Share, Bookmark } from 'lucide-react'
 import { getPostBySlug, urlFor } from '@/lib/sanity/client'
-import { PortableText } from '@portabletext/react'
+import { PortableText, type PortableTextComponents } from '@portabletext/react'
 import type { BlogPost as BlogPostType } from '@/types'
 
 interface BlogPostProps {
@@ -98,9 +98,9 @@ export function BlogPost({ slug, post: initialPost }: BlogPostProps) {
           
           {/* Categories */}
           <div className="flex flex-wrap gap-3 justify-center mb-6">
-            {post.categories.map((category) => (
+            {post.categories.map((category, index) => (
               <span
-                key={category._id}
+                key={category._id || `category-${post._id}-${index}`}
                 className={`px-4 py-2 rounded-full text-sm font-medium bg-${category.color}-500/20 text-${category.color}-300 border border-${category.color}-500/30`}
               >
                 {category.title}
@@ -201,9 +201,9 @@ export function BlogPost({ slug, post: initialPost }: BlogPostProps) {
 }
 
 // Portable Text components for rich content rendering
-const portableTextComponents = {
+const portableTextComponents: PortableTextComponents = {
   types: {
-    image: ({ value }: any) => (
+    image: ({ value }) => (
       <div className="my-8">
         <div className="aspect-video bg-gradient-to-br from-purple-600/20 to-cyan-600/20 rounded-lg flex items-center justify-center relative overflow-hidden">
           {value.asset?.url ? (
@@ -228,7 +228,7 @@ const portableTextComponents = {
         )}
       </div>
     ),
-    code: ({ value }: any) => (
+    code: ({ value }) => (
       <pre className="my-6 p-6 bg-gray-900 rounded-lg overflow-x-auto">
         <code className={`language-${value.language || 'text'}`}>
           {value.code}
@@ -237,9 +237,9 @@ const portableTextComponents = {
     ),
   },
   marks: {
-    link: ({ children, value }: any) => (
+    link: ({ children, value }) => (
       <a
-        href={value.href}
+        href={value?.href}
         target="_blank"
         rel="noopener noreferrer"
         className="text-cyan-400 hover:text-cyan-300 underline smooth-transition"
@@ -247,29 +247,29 @@ const portableTextComponents = {
         {children}
       </a>
     ),
-    code: ({ children }: any) => (
+    code: ({ children }) => (
       <code className="bg-purple-500/20 px-2 py-1 rounded text-purple-300">
         {children}
       </code>
     ),
   },
   block: {
-    h1: ({ children }: any) => (
+    h1: ({ children }) => (
       <h1 className="text-4xl font-bold text-white mt-12 mb-6 first:mt-0">
         {children}
       </h1>
     ),
-    h2: ({ children }: any) => (
+    h2: ({ children }) => (
       <h2 className="text-3xl font-semibold text-cyan-300 mt-10 mb-5">
         {children}
       </h2>
     ),
-    h3: ({ children }: any) => (
+    h3: ({ children }) => (
       <h3 className="text-2xl font-semibold text-purple-300 mt-8 mb-4">
         {children}
       </h3>
     ),
-    blockquote: ({ children }: any) => (
+    blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-purple-500 pl-6 my-6 italic text-gray-300 bg-purple-500/10 p-4 rounded-r-lg">
         {children}
       </blockquote>
@@ -298,7 +298,7 @@ function PostNotFound() {
       <div className="text-center glass-dark p-8 max-w-md">
         <h1 className="text-2xl font-bold text-white mb-4">Post Not Found</h1>
         <p className="text-gray-400 mb-6">
-          The blog post you're looking for doesn't exist or has been moved.
+          The blog post you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <button
           onClick={() => window.history.back()}

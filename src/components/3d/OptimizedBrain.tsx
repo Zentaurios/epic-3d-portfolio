@@ -91,7 +91,7 @@ export function OptimizedBrain({
   quality = 'high'
 }: OptimizedBrainProps) {
   const brainGroupRef = useRef<THREE.Group>(null!)
-  const connectionsRef = useRef<any[]>([])
+  const connectionsRef = useRef<(THREE.Line | THREE.Object3D | null)[]>([])
   const lastUpdateTime = useRef(0)
   const animationPhase = useRef(0)
   
@@ -172,7 +172,7 @@ export function OptimizedBrain({
     const connectionUpdateCount = Math.min(10, connectionsRef.current.length)
     for (let i = 0; i < connectionUpdateCount; i++) {
       const connection = connectionsRef.current[i]
-      if (connection && connection.material instanceof THREE.LineBasicMaterial) {
+      if (connection && 'material' in connection && connection.material instanceof THREE.LineBasicMaterial) {
         const wave = Math.sin(animationPhase.current * 2 + i * 0.5) * 0.5 + 0.5
         connection.material.opacity = brainActivity.synaptic * wave * opacity * 0.8 // Much brighter connections
       }

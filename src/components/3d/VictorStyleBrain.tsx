@@ -18,6 +18,28 @@ interface VictorStyleBrainProps {
   animationSpeed?: number // Add speed control to 3D brain
 }
 
+interface BrainNode {
+  position: [number, number, number]
+  region: number
+  type: string
+  activation: number
+  size: number
+}
+
+interface BrainConnection {
+  from: [number, number, number]
+  to: [number, number, number]
+  strength: number
+  type: string
+  activity: number
+}
+
+interface BrainMesh {
+  geometry: THREE.BufferGeometry
+  position: [number, number, number]
+  color: string
+}
+
 // Create accurate brain shape based on victors1681/3dbrain approach
 const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') => {
   const config = {
@@ -26,9 +48,9 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
     high: { nodes: 1800, connections: 150, detail: 16 }
   }[quality]
 
-  const nodes: any[] = []
-  const connections: any[] = []
-  const brainMeshes: any[] = []
+  const nodes: BrainNode[] = []
+  const connections: BrainConnection[] = []
+  const brainMeshes: BrainMesh[] = []
 
   // Create anatomically accurate brain hemisphere geometry
   const createBrainHemisphere = (isLeft: boolean) => {
@@ -203,7 +225,11 @@ function AnatomicalMesh({
   geometry: THREE.BufferGeometry
   position: [number, number, number]
   color: string
-  brainActivity: any
+  brainActivity: {
+    neural: number
+    synaptic: number
+    cognitive: number
+  }
   animated?: boolean
   animationSpeed?: number
 }) {

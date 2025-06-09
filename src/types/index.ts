@@ -1,3 +1,5 @@
+import React from 'react'
+
 // 3D Scene Types
 export interface SceneState {
   currentSection: 'home' | 'blog' | 'explore' | 'project' | 'consciousness' | 'memory' | 'creativity' | 'logic'
@@ -34,6 +36,25 @@ export interface BrainActivity {
   cognitive: number
 }
 
+// Sanity Block Content Type
+export interface SanityBlock {
+  _type: string
+  _key: string
+  children?: Array<{
+    _type: string
+    _key: string
+    text: string
+    marks?: string[]
+  }>
+  markDefs?: Array<{
+    _type: string
+    _key: string
+    href?: string
+  }>
+  style?: string
+  level?: number
+}
+
 // Sanity Image Types
 export interface SanityImage {
   asset: {
@@ -52,7 +73,7 @@ export interface Author {
     current: string
   }
   image?: SanityImage
-  bio?: any[] // Block content
+  bio?: SanityBlock[] // Block content
   email?: string
   website?: string
   social?: {
@@ -88,7 +109,7 @@ export interface BlogPost {
   publishedAt: string
   estimatedReadTime: number
   featured: boolean
-  body?: any[] // Block content
+  body?: SanityBlock[] // Block content
   author: Author
   categories: Category[]
   mainImage?: SanityImage
@@ -107,7 +128,7 @@ export interface Project {
     current: string
   }
   description: string
-  longDescription?: any[] // Block content
+  longDescription?: SanityBlock[] // Block content
   category: Category
   technologies: string[]
   status: 'live' | 'beta' | 'development' | 'archived'
@@ -228,7 +249,7 @@ export interface Technology {
 export interface TechCategory {
   id: string
   label: string
-  icon: any // Lucide icon component
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>> // Lucide icon component
   color: string
   technologies: Technology[]
 }
@@ -301,6 +322,16 @@ declare global {
   }
   
   interface Window {
-    lenis?: any
+    lenis?: {
+      scrollTo: (target: number | string | HTMLElement, options?: {
+        duration?: number
+        easing?: (t: number) => number
+        offset?: number
+        immediate?: boolean
+      }) => void
+      on: (event: string, callback: (...args: unknown[]) => void) => void
+      off: (event: string, callback: (...args: unknown[]) => void) => void
+      destroy: () => void
+    }
   }
 }

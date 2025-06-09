@@ -10,7 +10,7 @@ interface NavigationRegion {
   label: string
   route: string
   description: string
-  icon: React.ComponentType<any>
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
 }
 
 const navigationRegions: NavigationRegion[] = [

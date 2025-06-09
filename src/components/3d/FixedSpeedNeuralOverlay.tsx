@@ -1,6 +1,32 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
+
+interface Node {
+  x: number
+  y: number
+  z: number
+  vx: number
+  vy: number
+  vz: number
+  size: number
+  activity: number
+  region: number
+}
+
+interface Connection {
+  from: Node
+  to: Node
+  strength: number
+  pulsePhase: number
+}
+
+const regionColors = {
+  consciousness: { primary: [59, 130, 246], secondary: [37, 99, 235], accent: [147, 197, 253] },
+  memory: { primary: [139, 92, 246], secondary: [124, 58, 237], accent: [196, 181, 253] },
+  creativity: { primary: [6, 182, 212], secondary: [8, 145, 178], accent: [165, 243, 252] },
+  logic: { primary: [16, 185, 129], secondary: [5, 150, 105], accent: [167, 243, 208] }
+}
 
 interface FixedSpeedNeuralOverlayProps {
   brainActivity?: {
@@ -9,6 +35,8 @@ interface FixedSpeedNeuralOverlayProps {
     cognitive: number
   }
   currentRegion?: 'consciousness' | 'memory' | 'creativity' | 'logic'
+  scrollProgress?: number
+  isTransitioning?: boolean
   opacity?: number
   enabled?: boolean
 }
@@ -16,20 +44,15 @@ interface FixedSpeedNeuralOverlayProps {
 export function FixedSpeedNeuralOverlay({
   brainActivity = { neural: 0.5, synaptic: 0.5, cognitive: 0.5 },
   currentRegion = 'consciousness',
+  scrollProgress = 0,
+  isTransitioning = false,
   opacity = 0.4,
   enabled = true
 }: FixedSpeedNeuralOverlayProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number | undefined>(undefined)
-  const nodesRef = useRef<any[]>([])
-  const connectionsRef = useRef<any[]>([])
-
-  const regionColors = {
-    consciousness: { primary: [59, 130, 246], secondary: [37, 99, 235], accent: [147, 197, 253] },
-    memory: { primary: [139, 92, 246], secondary: [124, 58, 237], accent: [196, 181, 253] },
-    creativity: { primary: [6, 182, 212], secondary: [8, 145, 178], accent: [165, 243, 252] },
-    logic: { primary: [16, 185, 129], secondary: [5, 150, 105], accent: [167, 243, 208] }
-  }
+  const nodesRef = useRef<Node[]>([])
+  const connectionsRef = useRef<Connection[]>([])
 
   useEffect(() => {
     if (!enabled) return

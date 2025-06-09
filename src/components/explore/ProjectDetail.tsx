@@ -381,7 +381,10 @@ export function ProjectDetail({ slug, project: initialProject }: ProjectDetailPr
                 </div>
                 {project.completedAt && (
                   <div>
-                    <div className="text-sm text-gray-400">Completed</div>
+                    <div className="text-sm text-gray-400 flex items-center space-x-1">
+                      <Calendar className="w-3 h-3" />
+                      <span>Completed</span>
+                    </div>
                     <div className="text-white font-medium">
                       {new Date(project.completedAt).toLocaleDateString('en-US', {
                         year: 'numeric',
@@ -425,7 +428,7 @@ function ProjectNotFound() {
       <div className="text-center glass-dark p-8 max-w-md">
         <h1 className="text-2xl font-bold text-white mb-4">Project Not Found</h1>
         <p className="text-gray-400 mb-6">
-          The project you're looking for doesn't exist or has been moved.
+          The project you&apos;re looking for doesn&apos;t exist or has been moved.
         </p>
         <button
           onClick={() => window.history.back()}

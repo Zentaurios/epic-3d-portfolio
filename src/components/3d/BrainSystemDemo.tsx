@@ -2,11 +2,21 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { LayeredBrainSystem } from '@/components/3d/LayeredBrainSystem'
+import { FixedSpeedNeuralOverlay } from '@/components/3d/FixedSpeedNeuralOverlay'
+import { useScrollProgress } from '@/lib/hooks/useScrollProgress'
+import { useNavigationManager } from '@/lib/hooks/useNavigationManager'
+import { useVictorBrainActivity } from '@/components/3d/VictorStyleBrain'
 
 export default function BrainSystemDemo() {
   const [currentSection, setCurrentSection] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  
+  // Add brain activity hooks
+  const { scrollProgress } = useScrollProgress()
+  const { navigationState } = useNavigationManager()
+  const brainActivity = useVictorBrainActivity(0.05)
+  const currentRegion = navigationState.brainRegion || 'consciousness'
   
   const sections = [
     {
@@ -60,7 +70,20 @@ export default function BrainSystemDemo() {
   }, [sections.length])
   
   return (
-    <LayeredBrainSystem>
+    <>
+      {/* FixedSpeedNeuralOverlay behind LayeredBrainSystem with lower z-index */}
+      <div className="fixed inset-0 z-[-2]">
+        <FixedSpeedNeuralOverlay
+          brainActivity={brainActivity}
+          currentRegion={currentRegion as 'consciousness' | 'memory' | 'creativity' | 'logic'}
+          scrollProgress={scrollProgress}
+          isTransitioning={navigationState.isTransitioning}
+          opacity={0.3}
+          enabled={true}
+        />
+      </div>
+      
+      <LayeredBrainSystem>
       {/* Demo Content with Enhanced Brain Interaction */}
       <div className="relative z-10 bg-transparent">
         {/* Header with brain activity indicator */}
@@ -235,5 +258,6 @@ export default function BrainSystemDemo() {
         </section>
       </div>
     </LayeredBrainSystem>
+    </>
   )
 }

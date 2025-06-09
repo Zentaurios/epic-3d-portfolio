@@ -5,10 +5,10 @@ import { BlogPost, Project } from '@/types'
 // Using type-safe approach to bypass Sanity client typing conflicts
 
 // Helper function to safely fetch from Sanity
-async function safeFetch<T>(query: string, params?: Record<string, any>): Promise<T[]> {
+async function safeFetch<T>(query: string, params?: Record<string, unknown>): Promise<T[]> {
   try {
     // Use explicit typing to bypass Sanity client issues
-    const result = await (client as any).fetch(query, params || {})
+    const result = await (client as {fetch: (query: string, params: Record<string, unknown>) => Promise<unknown>}).fetch(query, params || {})
     return Array.isArray(result) ? result : []
   } catch (error) {
     console.error('Sanity fetch error:', error)
@@ -34,12 +34,6 @@ export async function intelligentSearch(query: string): Promise<{
   categories: Array<{title: string, slug: {current: string}}>
 }> {
   try {
-    // Get categories for context
-    const categories = await getAllCategories()
-    
-    // Create keyword mapping from categories and common tech terms
-    const keywordMap = createKeywordMap(categories, query)
-    
     // Search posts with enhanced keyword matching
     const postsQuery = `*[_type == "post" && defined(slug.current) && (
       title match "*" + $query + "*" ||
@@ -103,35 +97,6 @@ export async function intelligentSearch(query: string): Promise<{
     console.error('Error in intelligent search:', error)
     return { posts: [], projects: [], categories: [] }
   }
-}
-
-// Create keyword mapping for better search context
-function createKeywordMap(categories: Array<{title: string, description?: string}>, query: string) {
-  const lowerQuery = query.toLowerCase()
-  
-  // Common keyword synonyms and related terms
-  const synonymMap: Record<string, string[]> = {
-    'frontend': ['front-end', 'client-side', 'ui', 'user interface', 'web design'],
-    'backend': ['back-end', 'server-side', 'api', 'database', 'server'],
-    'fullstack': ['full-stack', 'end-to-end', 'complete'],
-    'mobile': ['ios', 'android', 'app', 'react native', 'flutter'],
-    'ai': ['artificial intelligence', 'machine learning', 'ml', 'deep learning'],
-    'web': ['website', 'webapp', 'web application', 'site'],
-    'design': ['ui', 'ux', 'user experience', 'interface', 'visual'],
-    'development': ['dev', 'coding', 'programming', 'building']
-  }
-  
-  // Technology-specific terms
-  const techMap: Record<string, string[]> = {
-    'react': ['reactjs', 'react.js', 'jsx', 'hooks'],
-    'next.js': ['nextjs', 'next', 'server-side rendering', 'ssr'],
-    'typescript': ['ts', 'type safety', 'typed javascript'],
-    'javascript': ['js', 'es6', 'node', 'vanilla js'],
-    'python': ['py', 'django', 'flask', 'data science'],
-    'three.js': ['threejs', '3d', 'webgl', 'graphics']
-  }
-  
-  return { synonymMap, techMap, categories }
 }
 
 // Search functions with proper typing and error handling
@@ -307,7 +272,7 @@ export async function getRecentContent(): Promise<{
       }
     }`
     
-    const results = await (client as any).fetch(recentContentQuery)
+    const results = await (client as {fetch: (query: string) => Promise<{recentPosts?: unknown[], recentProjects?: unknown[]}>}).fetch(recentContentQuery)
     return {
       recentPosts: Array.isArray(results?.recentPosts) ? results.recentPosts as BlogPost[] : [],
       recentProjects: Array.isArray(results?.recentProjects) ? results.recentProjects as Project[] : []
@@ -362,7 +327,7 @@ export async function findByExactTitle(title: string, type: 'post' | 'project'):
           completedAt
         }`
     
-    const result = await (client as any).fetch(query, { title })
+    const result = await (client as {fetch: (query: string, params: {title: string}) => Promise<unknown>}).fetch(query, { title })
     return result ? (result as BlogPost | Project) : null
   } catch (error) {
     console.error(`Error finding ${type} by exact title:`, error)

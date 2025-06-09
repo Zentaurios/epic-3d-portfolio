@@ -108,10 +108,18 @@ export function useNavigationManager({
       transitionProgress: 0
     }))
     
+    // Apply transition effects based on type and intensity
+    const transitionDelay = transitionType === 'memory-dive' ? 300 : 
+                           transitionType === 'thought-flow' ? 250 :
+                           transitionType === 'synaptic-fire' ? 150 : 200
+    
+    // Scale delay by intensity
+    const adjustedDelay = transitionDelay * intensity
+    
     // Delay actual navigation to allow for effect buildup
     setTimeout(() => {
       router.push(route)
-    }, 200)
+    }, adjustedDelay)
     
   }, [router])
   

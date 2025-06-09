@@ -19,7 +19,11 @@ export function useScrollProgress({ smoothing = 0.1, onProgress }: UseScrollProg
     
     const updateScrollProgress = () => {
       // Use Lenis scroll value if available, fallback to native scroll
-      const lenis = (window as any).lenis
+      const lenis = (window as { lenis?: { 
+        scroll: number; 
+        on: (event: string, callback: () => void) => void; 
+        off: (event: string, callback: () => void) => void 
+      } }).lenis
       const scrollY = lenis ? lenis.scroll : window.scrollY
       
       // Get proper document height
@@ -61,7 +65,11 @@ export function useScrollProgress({ smoothing = 0.1, onProgress }: UseScrollProg
     }
     
     // Listen to both Lenis and native scroll events
-    const lenis = (window as any).lenis
+    const lenis = (window as { lenis?: { 
+      scroll: number; 
+      on: (event: string, callback: () => void) => void; 
+      off: (event: string, callback: () => void) => void 
+    } }).lenis
     
     if (lenis) {
       // Use Lenis scroll events for smooth scrolling
