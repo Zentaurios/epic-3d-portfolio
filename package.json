@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@next/bundle-analyzer": "^15.0.0",
+    "@portabletext/react": "^3.2.1",
     "@react-spring/three": "^10.0.1",
     "@react-three/drei": "^10.0.0-rc.3",
     "@react-three/fiber": "^9.0.0-rc.10",
