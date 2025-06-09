@@ -1,20 +1,17 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
 import { useLenisScroll } from './useLenisScroll'
 import { useNavigationManager } from './useNavigationManager'
-import type { SceneState, NavigationState, BrainActivity } from '@/types'
+import type { SceneState } from '@/types'
 import { CAMERA_CONFIGS } from '@/lib/utils/constants'
 
 export function use3DScene() {
-  const router = useRouter()
-  const pathname = usePathname()
   
   // Use the new navigation manager for brain regions
   const { navigationState, navigateWithTransition, getTransitionProps } = useNavigationManager({
-    onRegionChange: (region) => {
-      console.log(`Brain region changed to: ${region}`)
+    onRegionChange: () => {
+      // Handle region change
     }
   })
   

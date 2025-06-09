@@ -74,11 +74,9 @@ export function useScrollProgress({ smoothing = 0.1, onProgress }: UseScrollProg
     if (lenis) {
       // Use Lenis scroll events for smooth scrolling
       lenis.on('scroll', updateScrollProgress)
-      console.log('🧠 Using Lenis scroll events for brain activity')
     } else {
       // Fallback to native scroll events
       window.addEventListener('scroll', updateScrollProgress, { passive: true })
-      console.log('🧠 Using native scroll events for brain activity')
     }
     
     // Initial calculation

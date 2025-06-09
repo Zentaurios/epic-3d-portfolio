@@ -73,12 +73,10 @@ function RotatingBrainGroup({
 }
 
 export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
-  console.log('🧠 LayeredBrainSystem rendering')
-  
   const { navigationState } = useNavigationManager({
     transitionDuration: 2000,
     onRegionChange: (region) => {
-      console.log(`🧠 Brain region changed to: ${region}`)
+      // Region change handler
     }
   })
   

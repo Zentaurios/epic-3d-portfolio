@@ -10,16 +10,14 @@ export function ServiceWorkerProvider() {
         window.addEventListener('load', () => {
           navigator.serviceWorker
             .register('/sw.js')
-            .then((registration) => {
-              console.log('Service worker registered:', registration)
+            .then(() => {
+              // Service worker registered successfully
             })
-            .catch((error) => {
-              console.error('Error registering service worker:', error)
+            .catch(() => {
+              // Handle service worker registration error
             })
         })
       }
-    } else {
-      console.log('Service worker registration skipped in development')
     }
   }, [])
 

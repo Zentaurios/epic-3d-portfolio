@@ -30,7 +30,6 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       syncTouch: false
     })
 
-    console.log('✅ Lenis initialized successfully')
     setIsInitialized(true)
 
     // Single RAF loop - no conflicts
@@ -45,17 +44,8 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     // Expose Lenis instance globally for navigation
     ;(window as any).lenis = lenisRef.current
 
-    // Reduced debug logging - only log significant scroll changes
-    let lastLoggedScroll = 0
     const handleScroll = () => {
-      if (lenisRef.current && process.env.NODE_ENV === 'development') {
-        const currentScroll = lenisRef.current.scroll
-        // Only log every 100px of scroll to reduce noise
-        if (Math.abs(currentScroll - lastLoggedScroll) > 100) {
-          console.log('🧠 Brain scroll progress:', (currentScroll / (document.documentElement.scrollHeight - window.innerHeight)).toFixed(3))
-          lastLoggedScroll = currentScroll
-        }
-      }
+      // Brain activity can be triggered here if needed
     }
     
     lenisRef.current.on('scroll', handleScroll)

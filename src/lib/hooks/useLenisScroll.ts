@@ -12,7 +12,7 @@ export function useLenisScroll({ onSectionChange }: UseLenisScrollOptions = {}) 
     const element = document.getElementById(elementId)
     if (!element) return
 
-    const lenis = (window as any).lenis
+    const lenis = window.lenis
     if (lenis) {
       lenis.scrollTo(element, {
         offset,
@@ -30,7 +30,7 @@ export function useLenisScroll({ onSectionChange }: UseLenisScrollOptions = {}) 
 
   // Scroll to top
   const scrollToTop = useCallback(() => {
-    const lenis = (window as any).lenis
+    const lenis = window.lenis
     if (lenis) {
       lenis.scrollTo(0, {
         duration: 1.5,
@@ -68,10 +68,10 @@ export function useLenisScroll({ onSectionChange }: UseLenisScrollOptions = {}) 
 
   // Listen to Lenis scroll events
   useEffect(() => {
-    const lenis = (window as any).lenis
+    const lenis = window.lenis
     if (!lenis) return
 
-    const handleScroll = ({ scroll }: { scroll: number }) => {
+    const handleScroll = () => {
       // You can add custom scroll behaviors here
       // For example, parallax effects or scroll-triggered animations
     }

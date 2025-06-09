@@ -35,8 +35,8 @@ function BrainUniverseLoadingFallback() {
 export function BrainUniverseWrapper({ children }: BrainUniverseWrapperProps) {
   const { navigationState, getTransitionProps } = useNavigationManager({
     transitionDuration: 2000, // Longer for brain transitions
-    onRegionChange: (region) => {
-      console.log(`Navigating to brain region: ${region}`)
+    onRegionChange: () => {
+      // Handle region change
     }
   })
   

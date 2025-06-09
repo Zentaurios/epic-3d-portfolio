@@ -48,9 +48,6 @@ export function BrainNavigationDemo() {
   const { navigationState, navigateWithTransition, currentRegion } = useNavigationManager()
   const [isExpanded, setIsExpanded] = useState(false)
   
-  // Debug: Log component render
-  console.log('🧠 BrainNavigationDemo rendering, currentRegion:', currentRegion)
-
   const handleRegionChange = (region: NavigationRegion) => {
     navigateWithTransition(region.route, {
       transitionType: 'neural-pulse',

@@ -36,11 +36,11 @@ export function PerformanceMonitor({ onPerformanceUpdate }: PerformanceMonitorPr
         })
       }
       
-      // Console log performance for debugging (can be removed in production)
+      // Performance monitoring without console logs
       if (fps < 30) {
-        console.warn('🐌 Low FPS detected:', fps, 'fps')
+        // Could trigger performance optimization here
       } else if (fps < 45) {
-        console.log('⚡ Moderate performance:', fps, 'fps')
+        // Could adjust quality settings here
       }
     }
     

@@ -293,7 +293,6 @@ export function VictorStyleBrain({
   quality = 'medium',
   animationSpeed = 0.3 // Default slow speed
 }: VictorStyleBrainProps) {
-  console.log('🔧 VictorStyleBrain animationSpeed:', animationSpeed)
   const brainGroupRef = useRef<THREE.Group>(null!)
   const neuronsRef = useRef<THREE.Points>(null!)
   const connectionsRef = useRef<THREE.Group>(null!)
