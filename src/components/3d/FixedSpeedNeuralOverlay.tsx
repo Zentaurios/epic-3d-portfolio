@@ -44,8 +44,6 @@ interface FixedSpeedNeuralOverlayProps {
 export function FixedSpeedNeuralOverlay({
   brainActivity = { neural: 0.5, synaptic: 0.5, cognitive: 0.5 },
   currentRegion = 'consciousness',
-  scrollProgress = 0,
-  isTransitioning = false,
   opacity = 0.4,
   enabled = true
 }: FixedSpeedNeuralOverlayProps) {

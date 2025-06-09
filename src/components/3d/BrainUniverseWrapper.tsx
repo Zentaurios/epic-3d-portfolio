@@ -33,7 +33,7 @@ function BrainUniverseLoadingFallback() {
 }
 
 export function BrainUniverseWrapper({ children }: BrainUniverseWrapperProps) {
-  const { navigationState, getTransitionProps } = useNavigationManager({
+  const { navigationState } = useNavigationManager({
     transitionDuration: 2000, // Longer for brain transitions
     onRegionChange: () => {
       // Handle region change
@@ -42,7 +42,6 @@ export function BrainUniverseWrapper({ children }: BrainUniverseWrapperProps) {
   
   const { scrollProgress } = useScrollProgress()
   const brainActivity = useBrainActivity()
-  const transitionProps = getTransitionProps()
 
   return (
     <>
@@ -81,15 +80,7 @@ export function BrainUniverseWrapper({ children }: BrainUniverseWrapperProps) {
               intensity={brainActivity.neural}
             />
             
-            {/* Main Brain Universe Scene 
-            <LayeredBrainSystem
-              brainActivity={brainActivity}
-              transitionProps={transitionProps}
-              scrollProgress={scrollProgress}
-              currentRoute={navigationState.currentRoute}
-              isTransitioning={navigationState.isTransitioning}
-            />
-            */}
+            <LayeredBrainSystem />
 
           </Canvas>
         </Suspense>

@@ -12,7 +12,7 @@ interface LatestBlogsProps {
   brainActivity?: number
 }
 
-export function LatestBlogs({ blogs = [], onNavigate, brainActivity = 0.5 }: LatestBlogsProps) {
+export function LatestBlogs({ blogs = [], onNavigate }: LatestBlogsProps) {
   const [hoveredBlog, setHoveredBlog] = useState<string | null>(null)
   
   // Use provided blogs or fall back to minimal default

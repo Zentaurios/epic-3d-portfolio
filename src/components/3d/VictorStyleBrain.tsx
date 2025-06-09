@@ -480,6 +480,16 @@ export function useVictorBrainActivity(speed: number = 0.3) {
     cognitive: 0.6
   })
   
+  const speedRef = useRef(speed)
+  const lastUpdateRef = useRef(0)
+  const lastScrollRef = useRef(0)
+  const animationIdRef = useRef<number | null>(null)
+  
+  // Update speed ref when it changes
+  useEffect(() => {
+    speedRef.current = speed
+  }, [speed])
+  
   useEffect(() => {
     if (speed <= 0.01) {
       // Static mode - no updates
@@ -487,41 +497,50 @@ export function useVictorBrainActivity(speed: number = 0.3) {
       return
     }
     
-    let animationId: number
-    
-    // Speed-controlled updates
-    const updateActivity = () => {
-      const time = Date.now() * 0.002 * speed // Apply speed control
+    // Single animation loop that handles both time-based and scroll-based updates
+    const updateActivity = (currentTime: number) => {
+      // Throttle updates to prevent excessive re-renders
+      if (currentTime - lastUpdateRef.current < 100) {
+        animationIdRef.current = requestAnimationFrame(updateActivity)
+        return
+      }
       
-      // Speed-controlled scroll responsiveness
-      const scrollPercent = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1)
+      lastUpdateRef.current = currentTime
+      const time = currentTime * 0.002 * speedRef.current
       
-      setActivity({
-        neural: Math.min(1, scrollPercent * 1.8 + 0.2),
-        synaptic: Math.sin(time * 0.8) * 0.3 + 0.7,
-        cognitive: Math.cos(time * 0.5 + 1) * 0.4 + 0.6
-      })
+      // Get current scroll position
+      const scrollHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight)
+      const viewportHeight = window.innerHeight
+      const maxScroll = scrollHeight - viewportHeight
+      const scrollPercent = maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0
       
-      animationId = requestAnimationFrame(updateActivity)
+      // Only update if scroll has changed significantly or animation needs to continue
+      const scrollChanged = Math.abs(scrollPercent - lastScrollRef.current) > 0.01
+      
+      if (scrollChanged || true) { // Always animate for synaptic/cognitive
+        lastScrollRef.current = scrollPercent
+        
+        const newActivity = {
+          neural: Math.min(1, scrollPercent * 1.8 + 0.2),
+          synaptic: Math.sin(time * 0.8) * 0.3 + 0.7,
+          cognitive: Math.cos(time * 0.5 + 1) * 0.4 + 0.6
+        }
+        
+        setActivity(newActivity)
+      }
+      
+      animationIdRef.current = requestAnimationFrame(updateActivity)
     }
     
-    // Add scroll listener for immediate response
-    const handleScroll = () => {
-      const scrollPercent = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1)
-      setActivity(prev => ({
-        ...prev,
-        neural: Math.min(1, scrollPercent * 1.8 + 0.2)
-      }))
-    }
-    
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    updateActivity()
+    animationIdRef.current = requestAnimationFrame(updateActivity)
     
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-      cancelAnimationFrame(animationId)
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current)
+        animationIdRef.current = null
+      }
     }
-  }, [speed])
+  }, [speed]) // Only depend on speed to prevent unnecessary re-initialization
   
   return activity
 }

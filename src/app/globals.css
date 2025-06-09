@@ -40,6 +40,12 @@ html {
   height: 100%;
   overflow-x: hidden;
   scroll-behavior: auto !important; /* Let Lenis handle smooth scrolling */
+  /* Ensure proper height calculation for Lenis */
+  min-height: 100vh;
+  /* Prevent scroll issues */
+  overscroll-behavior: none;
+  /* Hide native scrollbars when Lenis is active */
+  overflow-y: hidden;
 }
 
 body {
@@ -49,17 +55,31 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  /* Hide native scrollbars - Lenis handles scrolling */
+  overflow-y: hidden;
+  /* Ensure body can expand to full content height */
+  min-height: 100vh;
+  /* Prevent height calculation issues */
+  position: relative;
   line-height: 1.6;
   width: 100%;
-  min-height: 100vh;
-  position: relative;
   touch-action: auto;
+  /* Prevent overscroll bounce */
+  overscroll-behavior: none;
+  /* Ensure content can be properly measured */
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-  min-height: 400vh;
+  /* Remove fixed height - let content determine height */
+  min-height: 100vh;
   position: relative;
   z-index: 10;
+  /* Ensure main expands with content */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* =============================================

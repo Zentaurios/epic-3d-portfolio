@@ -28,8 +28,8 @@ interface HomeContentProps {
 }
 
 export function HomeContent({ content }: HomeContentProps) {
-  const { navigateWithTransition, currentRegion } = useNavigationManager()
-  const { activeSection, getSectionProgress } = useSectionNavigation()
+  const { navigateWithTransition } = useNavigationManager()
+  const { getSectionProgress } = useSectionNavigation()
   
   const navigateToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -52,7 +52,6 @@ export function HomeContent({ content }: HomeContentProps) {
             <div className="relative z-10">
               <HeroSection 
                 onExplore={() => navigateToSection('explore')}
-                brainActivity={getSectionProgress('hero')}
               />
             </div>
           </section>
@@ -66,7 +65,6 @@ export function HomeContent({ content }: HomeContentProps) {
             <div className="relative z-10">
               <ExploreSection 
                 onNavigate={navigateToSection}
-                brainActivity={getSectionProgress('explore')}
                 projects={content.projects}
               />
             </div>
@@ -86,7 +84,6 @@ export function HomeContent({ content }: HomeContentProps) {
                     transitionType: 'memory-dive', 
                     intensity: 0.8 
                   })}
-                  brainActivity={getSectionProgress('blog')}
                 />
               </Suspense>
             </div>

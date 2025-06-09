@@ -111,3 +111,90 @@ export const SCROLL_CONFIG = {
   duration: 1.2,
   easing: [0.25, 0.46, 0.45, 0.94],
 } as const
+
+// Type definition for the global lenis instance we use
+interface GlobalLenis {
+  scrollTo: (target: number | string, options?: { 
+    immediate?: boolean
+    duration?: number
+    easing?: (t: number) => number
+  }) => void
+  resize: () => void
+  scroll: number
+  limit: number
+}
+
+// Helper function to get the lenis instance with proper typing
+const getLenis = (): GlobalLenis | null => {
+  return (window as Window & { lenis?: GlobalLenis }).lenis || null
+}
+
+// Scroll utility functions for Lenis
+export const scrollUtils = {
+  // Force Lenis to recalculate scroll height
+  refreshLenisHeight: () => {
+    const lenis = getLenis()
+    if (lenis) {
+      // Multiple resize calls to ensure proper height calculation
+      lenis.resize()
+      setTimeout(() => lenis.resize(), 100)
+      setTimeout(() => lenis.resize(), 300)
+      setTimeout(() => lenis.resize(), 500)
+    }
+  },
+
+  // Scroll to bottom with proper height calculation
+  scrollToBottom: (smooth = true) => {
+    const lenis = getLenis()
+    if (lenis) {
+      // First refresh height
+      lenis.resize()
+      
+      setTimeout(() => {
+        const actualHeight = document.documentElement.scrollHeight
+        const viewportHeight = window.innerHeight
+        const maxScroll = actualHeight - viewportHeight
+        
+        if (smooth) {
+          lenis.scrollTo(maxScroll, { 
+            duration: 1.5,
+            easing: (t: number) => 1 - Math.pow(1 - t, 3)
+          })
+        } else {
+          lenis.scrollTo(maxScroll, { immediate: true })
+        }
+      }, 100)
+    } else {
+      // Fallback to native scroll
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: smooth ? 'smooth' : 'instant'
+      })
+    }
+  },
+
+  // Check if we can scroll further down
+  canScrollDown: () => {
+    const lenis = getLenis()
+    if (lenis) {
+      const { scroll, limit } = lenis
+      return scroll < limit - 10 // 10px tolerance
+    }
+    
+    // Fallback check
+    return window.scrollY < document.documentElement.scrollHeight - window.innerHeight - 10
+  },
+
+  // Get actual scroll progress (0 to 1)
+  getScrollProgress: () => {
+    const lenis = getLenis()
+    if (lenis) {
+      const { scroll, limit } = lenis
+      return limit > 0 ? Math.min(scroll / limit, 1) : 0
+    }
+    
+    // Fallback calculation
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+    return maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0
+  }
+}

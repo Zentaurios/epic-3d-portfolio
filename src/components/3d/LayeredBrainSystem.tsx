@@ -74,10 +74,7 @@ function RotatingBrainGroup({
 
 export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
   const { navigationState } = useNavigationManager({
-    transitionDuration: 2000,
-    onRegionChange: (region) => {
-      // Region change handler
-    }
+    transitionDuration: 2000
   })
   
   const { scrollProgress } = useScrollProgress()
@@ -109,14 +106,11 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
           >
             <BrainCamera
               scrollProgress={scrollProgress}
-              region={currentRegion}
-              isTransitioning={navigationState.isTransitioning}
             />
             
             <BrainLighting
               region={currentRegion}
               intensity={0.5}
-              brainActivity={brainActivity}
             />
             
             {/* Single Large Background Brain - Victor Style - RE-ENABLED */}
@@ -138,13 +132,9 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
 
 // Simplified camera system
 function BrainCamera({ 
-  scrollProgress, 
-  region, 
-  isTransitioning
+  scrollProgress
 }: {
   scrollProgress: number
-  region: string
-  isTransitioning: boolean
 }) {
   const cameraRef = useRef<THREE.PerspectiveCamera>(null!)
   
@@ -178,13 +168,10 @@ function BrainCamera({
 
 // Simplified lighting system
 function BrainLighting({ 
-  region, 
-  intensity, 
-  brainActivity 
+  intensity
 }: {
   region: string
   intensity: number
-  brainActivity: { neural: number; synaptic: number; cognitive: number }
 }) {
   return (
     <group>

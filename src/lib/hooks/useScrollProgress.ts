@@ -1,19 +1,26 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 interface UseScrollProgressOptions {
   smoothing?: number
   onProgress?: (progress: number) => void
 }
 
-export function useScrollProgress({ smoothing = 0.1, onProgress }: UseScrollProgressOptions = {}) {
+export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {}) {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down')
   const [isScrolling, setIsScrolling] = useState(false)
   
+  // Use refs to prevent unnecessary re-renders and track previous values
+  const onProgressRef = useRef(onProgress)
+  const lastScrollYRef = useRef(0)
+  const lastDirectionRef = useRef<'up' | 'down'>('down')
+  const lastProgressRef = useRef(0)
+  
+  onProgressRef.current = onProgress
+  
   useEffect(() => {
-    let lastScrollY = 0
     let scrollTimeoutId: NodeJS.Timeout
     let targetProgress = 0
     
@@ -41,19 +48,25 @@ export function useScrollProgress({ smoothing = 0.1, onProgress }: UseScrollProg
       // Calculate normalized scroll progress (0 to 1)
       targetProgress = maxScroll > 0 ? Math.min(Math.max(scrollY / maxScroll, 0), 1) : 0
       
-      // Determine scroll direction
-      if (scrollY > lastScrollY) {
-        setScrollDirection('down')
-      } else if (scrollY < lastScrollY) {
-        setScrollDirection('up')
+      // Determine scroll direction with tolerance and only update if changed
+      const scrollDiff = scrollY - lastScrollYRef.current
+      if (Math.abs(scrollDiff) > 2) { // Increased tolerance to prevent excessive updates
+        const newDirection = scrollDiff > 0 ? 'down' : 'up'
+        if (newDirection !== lastDirectionRef.current) {
+          setScrollDirection(newDirection)
+          lastDirectionRef.current = newDirection
+        }
+        lastScrollYRef.current = scrollY
       }
       
-      lastScrollY = scrollY
       setIsScrolling(true)
       
-      // Update progress immediately for better responsiveness
-      setScrollProgress(targetProgress)
-      onProgress?.(targetProgress)
+      // Only update progress if it has changed significantly
+      if (Math.abs(targetProgress - lastProgressRef.current) > 0.001) {
+        setScrollProgress(targetProgress)
+        lastProgressRef.current = targetProgress
+        onProgressRef.current?.(targetProgress)
+      }
       
       // Clear existing timeout
       clearTimeout(scrollTimeoutId)
@@ -90,7 +103,7 @@ export function useScrollProgress({ smoothing = 0.1, onProgress }: UseScrollProg
       }
       clearTimeout(scrollTimeoutId)
     }
-  }, [smoothing, onProgress])
+  }, []) // Empty dependency array - everything is handled via refs or is stable
   
   return {
     scrollProgress,
