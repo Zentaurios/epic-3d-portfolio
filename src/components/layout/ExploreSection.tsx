@@ -109,7 +109,13 @@ export function ExploreSection({ onNavigate, brainActivity = 0, projects = [] }:
               }`}
               onMouseEnter={() => setHoveredProject(index)}
               onMouseLeave={() => setHoveredProject(null)}
-              onClick={() => onNavigate('explore')}
+              onClick={() => {
+                if (project.slug?.current) {
+                  window.location.href = `/explore/${project.slug.current}`
+                } else {
+                  onNavigate('explore')
+                }
+              }}
             >
               {/* Project Header */}
               <div className="flex items-start justify-between mb-6">

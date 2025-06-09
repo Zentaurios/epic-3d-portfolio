@@ -32,6 +32,49 @@ function BrainLoadingFallback() {
   )
 }
 
+// Rotating Brain Group with proper orientation
+function RotatingBrainGroup({ 
+  brainActivity 
+}: {
+  brainActivity: { neural: number; synaptic: number; cognitive: number }
+}) {
+  const groupRef = useRef<THREE.Group>(null!)
+  
+  useFrame((state) => {
+    if (groupRef.current) {
+      const time = state.clock.elapsedTime
+      
+      // Initial rotation to reorient the brain (Y axis becomes X axis)
+      const baseRotationZ = Math.PI / 2 // 90 degrees around Z axis
+      
+      // Continuous slow rotation around Y axis (horizontal spin)
+      const rotationY = time * 0.05
+      
+      // Optional: slight wobble based on brain activity
+      const activityWobble = (brainActivity.neural + brainActivity.synaptic) * 0.02
+      
+      groupRef.current.rotation.set(
+        activityWobble, // Removed tilt - only keep activity wobble
+        rotationY,
+        baseRotationZ
+      )
+    }
+  })
+  
+  return (
+    <group ref={groupRef}>
+      <VictorStyleBrain
+        brainActivity={brainActivity}
+        scale={1}
+        animated={true}
+        opacity={0.4}
+        quality="medium"
+        animationSpeed={0.2} // VERY SLOW 3D brain animation
+      />
+    </group>
+  )
+}
+
 export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
   console.log('🧠 LayeredBrainSystem rendering')
   
@@ -84,14 +127,7 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
             
             {/* Single Large Background Brain - Victor Style - RE-ENABLED */}
             <group scale={[2.5, 2.5, 2.5]} position={[0, 0, -15]}>
-              <VictorStyleBrain
-                brainActivity={brainActivity}
-                scale={1}
-                animated={true}
-                opacity={0.4}
-                quality="medium"
-                animationSpeed={0.2} // VERY SLOW 3D brain animation
-              />
+              <RotatingBrainGroup brainActivity={brainActivity} />
             </group>
           </Canvas>
         </Suspense>
@@ -103,8 +139,7 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
           brainActivity={brainActivity}
           currentRegion={currentRegion as 'consciousness' | 'memory' | 'creativity' | 'logic'}
           opacity={0.25}
-          enabled={true} // RE-ENABLED - Speed fix complete
-          animationSpeed={0.3} // Balanced speed - visible but not distracting
+          enabled={true} // Fixed slow speed - no animationSpeed needed
         />
       </div>
 

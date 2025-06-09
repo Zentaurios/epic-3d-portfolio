@@ -2,11 +2,10 @@
 
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { OptimizedBrain } from './OptimizedBrain'
+import { LayeredBrainSystem } from './LayeredBrainSystem'
 import { ScrollCamera, ModernLighting } from './ModernCamera'
 import { useNavigationManager, useBrainActivity } from '@/lib/hooks/useNavigationManager'
 import { useScrollProgress } from '@/lib/hooks/useScrollProgress'
-import { useScrollVelocity } from '@/lib/hooks/useScrollVelocity'
 
 interface BrainUniverseWrapperProps {
   children?: React.ReactNode
@@ -34,67 +33,19 @@ function BrainUniverseLoadingFallback() {
 }
 
 export function BrainUniverseWrapper({ children }: BrainUniverseWrapperProps) {
-  console.log('🧠 BrainUniverseWrapper starting render...')
-  
-  // Initialize hooks at component level (not inside try-catch)
   const { navigationState, getTransitionProps } = useNavigationManager({
-    transitionDuration: 2000,
+    transitionDuration: 2000, // Longer for brain transitions
     onRegionChange: (region) => {
       console.log(`Navigating to brain region: ${region}`)
     }
   })
   
   const { scrollProgress } = useScrollProgress()
-  const { scrollVelocity, scrollDirection } = useScrollVelocity()
   const brainActivity = useBrainActivity()
-  
-  try {
-    const transitionProps = getTransitionProps()
-    
-    // Get current brain region for color sync
-    const currentRegion = navigationState.brainRegion || 'consciousness'
-    
-    console.log('🧠 BrainUniverseWrapper render:', {
-      scrollProgress: scrollProgress.toFixed(3),
-      scrollVelocity: scrollVelocity.toFixed(3),
-      scrollDirection,
-      currentRegion,
-      isTransitioning: navigationState.isTransitioning
-    })
-    
-  } catch (error) {
-    console.error('🚨 BrainUniverseWrapper hook error:', error)
-    // Don't return early - continue with rendering using default values
-  }
+  const transitionProps = getTransitionProps()
 
   return (
     <>
-      {/* 
-        🧠 BRAIN 3D EXPERIENCE LAYERING SYSTEM (Highest to Lowest Z-Index):
-        
-        Layer 1: Brain Navigation & Side Navigation (z-index: 99999)
-          - BrainNavigationDemo: Top-right brain region selector
-          - SectionNavigation: Right-side scroll indicators
-          - Always clickable and visible above all content
-        
-        Layer 2: 3D Brain Border Wrapper (z-index: 0, but in 3D space)
-          - Brain tissue border around viewport edges
-          - Neural sparks and pulsating activity
-          - Responds to scroll velocity and brain region colors
-          - Fades to transparent center for content visibility
-        
-        Layer 3: Page Content (z-index: 10)
-          - All page sections and text content
-          - Glass morphism effects for readability
-          - Overlays the 3D background
-        
-        Layer 4: Enhanced 3D Background Canvas (z-index: 0, deepest 3D)
-          - Enhanced neural networks with 50% more visibility
-          - Inner cortex energy effects
-          - Neural connection webs
-          - Responds to scroll and brain region transitions
-      */}
-      
       {/* Fixed 3D Brain Universe Background */}
       <div className="fixed inset-0 z-0">
         <Suspense fallback={<BrainUniverseLoadingFallback />}>
@@ -130,24 +81,21 @@ export function BrainUniverseWrapper({ children }: BrainUniverseWrapperProps) {
               intensity={brainActivity.neural}
             />
             
-            {/* Main Brain Universe Scene */}
-            <OptimizedBrain
-              brainActivity={{
-                neural: scrollProgress,
-                synaptic: Math.abs(scrollVelocity),
-                cognitive: navigationState.isTransitioning ? 1 : 0.5
-              }}
-              scale={1}
-              animated={true}
-              opacity={0.8}
-              quality="high"
+            {/* Main Brain Universe Scene 
+            <LayeredBrainSystem
+              brainActivity={brainActivity}
+              transitionProps={transitionProps}
+              scrollProgress={scrollProgress}
+              currentRoute={navigationState.currentRoute}
+              isTransitioning={navigationState.isTransitioning}
             />
+            */}
 
           </Canvas>
         </Suspense>
       </div>
 
-      {/* Content overlay - Layer 3: Page Content */}
+      {/* Content overlay */}
       <div className="relative z-10">
         {children}
       </div>

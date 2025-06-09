@@ -11,24 +11,18 @@ interface FixedSpeedNeuralOverlayProps {
   currentRegion?: 'consciousness' | 'memory' | 'creativity' | 'logic'
   opacity?: number
   enabled?: boolean
-  animationSpeed?: number // 0 = stopped, 1 = normal, 2 = fast
 }
 
 export function FixedSpeedNeuralOverlay({
   brainActivity = { neural: 0.5, synaptic: 0.5, cognitive: 0.5 },
   currentRegion = 'consciousness',
   opacity = 0.4,
-  enabled = true,
-  animationSpeed = 0.3
+  enabled = true
 }: FixedSpeedNeuralOverlayProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const animationRef = useRef<number | undefined>(undefined)
   const nodesRef = useRef<any[]>([])
   const connectionsRef = useRef<any[]>([])
-  const lastTimeRef = useRef(0)
-  const accumulatedTimeRef = useRef(0)
-
-  console.log('🎛️ FixedSpeedNeuralOverlay - animationSpeed:', animationSpeed)
 
   const regionColors = {
     consciousness: { primary: [59, 130, 246], secondary: [37, 99, 235], accent: [147, 197, 253] },
@@ -70,9 +64,9 @@ export function FixedSpeedNeuralOverlay({
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
           z: Math.random() * 100 - 50,
-          vx: (Math.random() - 0.5) * 0.2, // Base velocity
+          vx: (Math.random() - 0.5) * 0.2, // Closer to original but still slower
           vy: (Math.random() - 0.5) * 0.2,
-          vz: (Math.random() - 0.5) * 0.1,
+          vz: (Math.random() - 0.5) * 0.02,
           size: 1 + Math.random() * 2,
           activity: Math.random(),
           region: Math.floor(Math.random() * 4)
@@ -102,87 +96,27 @@ export function FixedSpeedNeuralOverlay({
 
     initializeNetwork()
 
-    // FIXED FRAME RATE animation loop - 24 FPS for optimal performance
-    const targetFPS = 24
-    const frameInterval = 1000 / targetFPS // ~41.67ms
-
-    const animate = (currentTime: number) => {
-      // Calculate delta time
-      const deltaTime = currentTime - lastTimeRef.current
-      lastTimeRef.current = currentTime
-      
-      // Accumulate time
-      accumulatedTimeRef.current += deltaTime
-
-      // Only update at our target frame rate (30 FPS)
-      if (accumulatedTimeRef.current >= frameInterval) {
-        // Apply animation speed multiplier
-        const effectiveTime = (accumulatedTimeRef.current * animationSpeed) / 1000
-        
-        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
-        
-        if (animationSpeed <= 0) {
-          // Static mode - no updates
-          drawStaticNetwork(ctx)
-        } else {
-          // Animated mode with controlled speed
-          updateAndDrawNetwork(ctx, effectiveTime)
-        }
-        
-        accumulatedTimeRef.current = 0 // Reset accumulator
-      }
-
+    // Simple animation loop like the original NetworkBackground
+    const animate = () => {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
+      updateAndDrawNetwork(ctx)
       animationRef.current = requestAnimationFrame(animate)
     }
 
-    const drawStaticNetwork = (ctx: CanvasRenderingContext2D) => {
+    const updateAndDrawNetwork = (ctx: CanvasRenderingContext2D) => {
       const currentColors = regionColors[currentRegion]
       
-      // Draw static connections
-      connectionsRef.current.forEach(connection => {
-        const { from, to } = connection
-        const dx = to.x - from.x
-        const dy = to.y - from.y
-        const distance = Math.sqrt(dx * dx + dy * dy)
-        
-        if (distance < 200) {
-          ctx.beginPath()
-          ctx.moveTo(from.x, from.y)
-          ctx.lineTo(to.x, to.y)
-          ctx.strokeStyle = `rgba(${currentColors.secondary[0]}, ${currentColors.secondary[1]}, ${currentColors.secondary[2]}, ${0.1 * opacity})`
-          ctx.lineWidth = 0.5
-          ctx.stroke()
-        }
-      })
-      
-      // Draw static nodes
+      // Update node positions (simplified like original)
       nodesRef.current.forEach(node => {
-        ctx.beginPath()
-        ctx.arc(node.x, node.y, node.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${currentColors.primary[0]}, ${currentColors.primary[1]}, ${currentColors.primary[2]}, ${0.4 * opacity})`
-        ctx.fill()
-      })
-    }
+        // Simple movement like original NetworkBackground
+        node.x += node.vx
+        node.y += node.vy
 
-    const updateAndDrawNetwork = (ctx: CanvasRenderingContext2D, time: number) => {
-      const currentColors = regionColors[currentRegion]
-      
-      // Update node positions and activity
-      nodesRef.current.forEach(node => {
-        // Update activity with controlled speed
-        node.activity = Math.sin(time + node.x * 0.01 + node.y * 0.01) * 0.5 + 0.5
-        
-        // Move nodes
-        node.x += node.vx * (1 + node.activity * 0.5)
-        node.y += node.vy * (1 + node.activity * 0.5)
-        node.z += node.vz
-
-        // Boundary wrapping
+        // Boundary wrapping (like original but with wrapping instead of bouncing)
         if (node.x < 0) node.x = window.innerWidth
         if (node.x > window.innerWidth) node.x = 0
         if (node.y < 0) node.y = window.innerHeight
         if (node.y > window.innerHeight) node.y = 0
-        if (node.z < -50 || node.z > 50) node.vz *= -1
       })
 
       // Draw connections with pulsing
@@ -193,8 +127,8 @@ export function FixedSpeedNeuralOverlay({
         const distance = Math.sqrt(dx * dx + dy * dy)
         
         if (distance < 200) {
-          // Update pulse phase with speed control
-          connection.pulsePhase += 0.1 * animationSpeed // APPLY SPEED CONTROL
+          // Update pulse phase with fixed slow speed
+          connection.pulsePhase += 0.01 // Very slow base pulse
           const pulse = Math.sin(connection.pulsePhase) * 0.5 + 0.5
           
           ctx.beginPath()
@@ -210,7 +144,7 @@ export function FixedSpeedNeuralOverlay({
 
       // Draw nodes with activity pulsing
       nodesRef.current.forEach(node => {
-        const activityPulse = 1 + Math.sin(time * 3 + node.activity * 5) * node.activity * 0.3
+        const activityPulse = 1 + Math.sin(node.activity * 5) * node.activity * 0.3 // Remove time dependency
         const finalSize = node.size * activityPulse
         
         ctx.beginPath()
@@ -222,7 +156,6 @@ export function FixedSpeedNeuralOverlay({
       })
     }
 
-    lastTimeRef.current = performance.now()
     animationRef.current = requestAnimationFrame(animate)
 
     return () => {
@@ -231,7 +164,7 @@ export function FixedSpeedNeuralOverlay({
         cancelAnimationFrame(animationRef.current)
       }
     }
-  }, [brainActivity, currentRegion, opacity, enabled, animationSpeed])
+  }, [brainActivity, currentRegion, opacity, enabled])
 
   if (!enabled) return null
 
