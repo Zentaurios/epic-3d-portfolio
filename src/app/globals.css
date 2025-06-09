@@ -1,0 +1,427 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   BRAIN PORTFOLIO CSS - Improved Opacity
+   ============================================= */
+
+/* Root Variables */
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --accent: #475569;
+  --secondary: #64748b;
+  --modern-dark: #020617;
+  --modern-slate: #475569;
+  --modern-secondary: #64748b;
+  --modern-accent: #334155;
+  --modern-subtle: #1e293b;
+  
+  /* Brain Region Colors */
+  --brain-consciousness: 59, 130, 246; /* #3b82f6 */
+  --brain-memory: 139, 92, 246; /* #8b5cf6 */
+  --brain-creativity: 6, 182, 212; /* #06b6d4 */
+  --brain-logic: 16, 185, 129; /* #10b981 */
+}
+
+/* =============================================
+   GLOBAL STYLES
+   ============================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: auto !important; /* Let Lenis handle smooth scrolling */
+}
+
+body {
+  background: var(--background) !important;
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  line-height: 1.6;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  touch-action: auto;
+}
+
+main {
+  min-height: 400vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* =============================================
+   SCROLLBAR STYLES
+   ============================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--modern-slate), var(--modern-secondary));
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--modern-secondary), var(--modern-accent));
+}
+
+/* =============================================
+   3D CANVAS STYLES
+   ============================================= */
+
+canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: screen;
+}
+
+.scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: transparent;
+}
+
+.main-layout-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: auto;
+  touch-action: auto;
+  background: transparent;
+}
+
+/* =============================================
+   IMPROVED GLASS EFFECT COMPONENTS
+   ============================================= */
+
+/* Base Glass Effect - Better opacity */
+.glass-effect {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-effect:hover {
+  background: rgba(15, 23, 42, 0.65);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Legacy glass classes - now use the new system */
+.glass {
+  @apply glass-effect;
+}
+
+.glass-dark {
+  @apply glass-effect;
+}
+
+/* =============================================
+   BRAIN REGION BACKGROUNDS - More Subtle
+   ============================================= */
+
+/* Brain Region Base Styles - Less color, more opacity */
+.brain-region {
+  @apply transition-all duration-1000;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Specific Brain Regions - Very subtle colors */
+.brain-region-consciousness {
+  @apply brain-region;
+  background: rgba(var(--brain-consciousness), 0.05);
+  border: 1px solid rgba(var(--brain-consciousness), 0.03);
+}
+
+.brain-region-memory {
+  @apply brain-region;
+  background: rgba(var(--brain-memory), 0.05);
+  border: 1px solid rgba(var(--brain-memory), 0.03);
+}
+
+.brain-region-creativity {
+  @apply brain-region;
+  background: rgba(var(--brain-creativity), 0.05);
+  border: 1px solid rgba(var(--brain-creativity), 0.03);
+}
+
+.brain-region-logic {
+  @apply brain-region;
+  background: rgba(var(--brain-logic), 0.05);
+  border: 1px solid rgba(var(--brain-logic), 0.03);
+}
+
+/* =============================================
+   CONTENT CONTAINERS - Subtle Colors, High Opacity
+   ============================================= */
+
+/* Content Wrapper - Centers content and adds brain-themed glass */
+.content-wrapper {
+  @apply w-full max-w-6xl px-4 mx-auto;
+  position: relative;
+  z-index: 10;
+}
+
+.page-section {
+  @apply flex items-center justify-center min-h-screen py-20;
+  position: relative;
+}
+
+/* Brain-themed content containers - Medium colors, solid backgrounds */
+.brain-region-consciousness .glass-effect,
+.brain-region-consciousness .content-wrapper > div,
+.brain-region-consciousness .relative.z-10 {
+  background: rgba(15, 23, 42, 0.5) !important;
+  border-color: rgba(var(--brain-consciousness), 0.16) !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(var(--brain-consciousness), 0.12),
+    0 0 25px rgba(var(--brain-consciousness), 0.06) !important;
+}
+
+.brain-region-memory .glass-effect,
+.brain-region-memory .content-wrapper > div,
+.brain-region-memory .relative.z-10 {
+  background: rgba(15, 23, 42, 0.5) !important;
+  border-color: rgba(var(--brain-memory), 0.16) !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(var(--brain-memory), 0.12),
+    0 0 25px rgba(var(--brain-memory), 0.06) !important;
+}
+
+.brain-region-creativity .glass-effect,
+.brain-region-creativity .content-wrapper > div,
+.brain-region-creativity .relative.z-10 {
+  background: rgba(15, 23, 42, 0.5) !important;
+  border-color: rgba(var(--brain-creativity), 0.16) !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(var(--brain-creativity), 0.12),
+    0 0 25px rgba(var(--brain-creativity), 0.06) !important;
+}
+
+.brain-region-logic .glass-effect,
+.brain-region-logic .content-wrapper > div,
+.brain-region-logic .relative.z-10 {
+  background: rgba(15, 23, 42, 0.5) !important;
+  border-color: rgba(var(--brain-logic), 0.16) !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(var(--brain-logic), 0.12),
+    0 0 25px rgba(var(--brain-logic), 0.06) !important;
+}
+
+/* Enhanced hover effects - Medium color increase */
+.brain-region-consciousness .glass-effect:hover,
+.brain-region-consciousness .content-wrapper > div:hover,
+.brain-region-consciousness .relative.z-10:hover {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border-color: rgba(var(--brain-consciousness), 0.22) !important;
+  box-shadow: 
+    0 6px 25px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(var(--brain-consciousness), 0.16),
+    0 0 35px rgba(var(--brain-consciousness), 0.08) !important;
+}
+
+.brain-region-memory .glass-effect:hover,
+.brain-region-memory .content-wrapper > div:hover,
+.brain-region-memory .relative.z-10:hover {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border-color: rgba(var(--brain-memory), 0.22) !important;
+  box-shadow: 
+    0 6px 25px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(var(--brain-memory), 0.16),
+    0 0 35px rgba(var(--brain-memory), 0.08) !important;
+}
+
+.brain-region-creativity .glass-effect:hover,
+.brain-region-creativity .content-wrapper > div:hover,
+.brain-region-creativity .relative.z-10:hover {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border-color: rgba(var(--brain-creativity), 0.22) !important;
+  box-shadow: 
+    0 6px 25px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(var(--brain-creativity), 0.16),
+    0 0 35px rgba(var(--brain-creativity), 0.08) !important;
+}
+
+.brain-region-logic .glass-effect:hover,
+.brain-region-logic .content-wrapper > div:hover,
+.brain-region-logic .relative.z-10:hover {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border-color: rgba(var(--brain-logic), 0.22) !important;
+  box-shadow: 
+    0 6px 25px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(var(--brain-logic), 0.16),
+    0 0 35px rgba(var(--brain-logic), 0.08) !important;
+}
+
+/* =============================================
+   TYPOGRAPHY & TEXT EFFECTS
+   ============================================= */
+
+/* Heading Styles - Added 6px vertical padding */
+h1, h2, h3, h4, h5, h6 {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.heading-gradient {
+  @apply text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text;
+}
+
+.text-enhanced {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* =============================================
+   BRAIN ACTIVITY ANIMATIONS
+   ============================================= */
+
+.neural-pulse {
+  animation: neural-pulse 2s ease-in-out infinite;
+}
+
+@keyframes neural-pulse {
+  0%, 100% { 
+    opacity: 0.6; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.02); 
+  }
+}
+
+.synaptic-fire {
+  animation: synaptic-fire 0.8s ease-out;
+}
+
+@keyframes synaptic-fire {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.9); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.1); 
+  }
+  100% { 
+    opacity: 0.8; 
+    transform: scale(1); 
+  }
+}
+
+.memory-fade {
+  animation: memory-fade 1.5s ease-in-out;
+}
+
+@keyframes memory-fade {
+  0% { 
+    opacity: 0; 
+    filter: blur(10px) brightness(0.5); 
+  }
+  50% { 
+    opacity: 0.7; 
+    filter: blur(2px) brightness(1.2); 
+  }
+  100% { 
+    opacity: 1; 
+    filter: blur(0px) brightness(1); 
+  }
+}
+
+.thought-transition {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =============================================
+   NAVIGATION STYLES
+   ============================================= */
+
+.brain-nav {
+  pointer-events: auto;
+  position: relative;
+}
+
+.brain-nav * {
+  pointer-events: auto;
+}
+
+/* =============================================
+   ACCESSIBILITY & REDUCED MOTION
+   ============================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .brain-nav *,
+  .brain-region,
+  .neural-pulse,
+  .synaptic-fire,
+  .memory-fade,
+  .thought-transition {
+    animation: none !important;
+    transition: opacity 0.1s ease !important;
+  }
+  
+  canvas {
+    opacity: 0.1 !important;
+  }
+}
+
+/* =============================================
+   THEME SUPPORT
+   ============================================= */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+}

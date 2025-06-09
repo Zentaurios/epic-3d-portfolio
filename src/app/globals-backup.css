@@ -1,0 +1,1584 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Brain Universe Navigation Styles - Simplified for maximum compatibility */
+.brain-nav {
+  /* Ensure navigation elements don't interfere with Lenis */
+  pointer-events: auto;
+  position: relative;
+}
+
+.brain-nav * {
+  /* Allow clicks on navigation elements */
+  pointer-events: auto;
+}
+
+/* Smooth scroll optimization */
+html {
+  scroll-behavior: auto !important; /* Let Lenis handle smooth scrolling */
+}
+
+/* Brain Universe Enhancements - Enhanced visibility for sections */
+.brain-region-consciousness {
+  @apply transition-all duration-1000;
+  background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.6) 0%, rgba(59, 130, 246, 0.2) 40%, rgba(59, 130, 246, 0.05) 80%, transparent 100%);
+  --brain-color: 59, 130, 246; /* #3b82f6 */
+  position: relative;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: inset 0 0 50px rgba(59, 130, 246, 0.1);
+}
+
+.brain-region-memory {
+  @apply transition-all duration-1000;
+  background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.6) 0%, rgba(139, 92, 246, 0.2) 40%, rgba(139, 92, 246, 0.05) 80%, transparent 100%);
+  --brain-color: 139, 92, 246; /* #8b5cf6 */
+  position: relative;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow: inset 0 0 50px rgba(139, 92, 246, 0.1);
+}
+
+.brain-region-creativity {
+  @apply transition-all duration-1000;
+  background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.6) 0%, rgba(6, 182, 212, 0.2) 40%, rgba(6, 182, 212, 0.05) 80%, transparent 100%);
+  --brain-color: 6, 182, 212; /* #06b6d4 */
+  position: relative;
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  box-shadow: inset 0 0 50px rgba(6, 182, 212, 0.1);
+}
+
+.brain-region-logic {
+  @apply transition-all duration-1000;
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.6) 0%, rgba(16, 185, 129, 0.2) 40%, rgba(16, 185, 129, 0.05) 80%, transparent 100%);
+  --brain-color: 16, 185, 129; /* #10b981 */
+  position: relative;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  box-shadow: inset 0 0 50px rgba(16, 185, 129, 0.1);
+}
+
+/* Brain region content overlays - Enhanced with stronger opacity */
+.brain-region-consciousness:first-of-type::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 30%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.brain-region-memory:first-of-type::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.15) 0%, rgba(139, 92, 246, 0.05) 30%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.brain-region-creativity:first-of-type::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(6, 182, 212, 0.15) 0%, rgba(6, 182, 212, 0.05) 30%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.brain-region-logic:first-of-type::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 30%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Neural Activity Effects */
+.neural-pulse {
+  animation: neural-pulse 2s ease-in-out infinite;
+}
+
+@keyframes neural-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.synaptic-fire {
+  animation: synaptic-fire 0.8s ease-out;
+}
+
+@keyframes synaptic-fire {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0.7; transform: scale(1); }
+}
+
+/* Neural transition effects */
+.thought-transition {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.memory-fade {
+  animation: memory-fade 1.5s ease-in-out;
+}
+
+@keyframes memory-fade {
+  0% { opacity: 0; filter: blur(10px) brightness(0.5); }
+  50% { opacity: 0.7; filter: blur(2px) brightness(1.2); }
+  100% { opacity: 1; filter: blur(0px) brightness(1); }
+}
+
+/* Enhanced hover effects for brain context - Gentle and safe */
+.hover\:neural-glow:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2), 0 0 40px rgba(59, 130, 246, 0.05);
+  transition: box-shadow 0.5s ease;
+}
+
+.hover\:memory-glow:hover {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.2), 0 0 40px rgba(139, 92, 246, 0.05);
+  transition: box-shadow 0.5s ease;
+}
+
+.hover\:creative-glow:hover {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.2), 0 0 40px rgba(6, 182, 212, 0.05);
+  transition: box-shadow 0.5s ease;
+}
+
+.hover\:logic-glow:hover {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2), 0 0 40px rgba(16, 185, 129, 0.05);
+  transition: box-shadow 0.5s ease;
+}
+
+/* Accessibility and safety enhancements */
+.gentle-brain-effects {
+  transition: all 0.3s ease;
+}
+
+/* Reduced motion support - Critical for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .brain-nav *,
+  .brain-region-* {
+    animation: none !important;
+    transition: opacity 0.1s ease !important;
+  }
+  
+  /* Disable 3D effects for users who need it */
+  canvas {
+    opacity: 0.1 !important;
+  }
+  
+  .neural-pulse,
+  .synaptic-fire,
+  .memory-fade,
+  .thought-transition {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --accent: #475569;
+  --secondary: #64748b;
+  --modern-dark: #020617;
+  --modern-slate: #475569;
+  --modern-secondary: #64748b;
+  --modern-accent: #334155;
+  --modern-subtle: #1e293b;
+}
+
+/* Custom CSS variables for theming */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Remove scroll-behavior to let Lenis handle all smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  /* Let Lenis control scroll behavior completely */
+}
+
+body {
+  background: #0f172a !important; /* Simple dark background that won't repeat */
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* Let Lenis handle vertical scrolling */
+  line-height: 1.6;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  touch-action: auto; /* Enable touch scrolling */
+}
+
+/* Ensure the main content has enough height to scroll */
+main {
+  min-height: 400vh; /* Force content to be tall enough to scroll */
+  position: relative;
+  z-index: 10;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--modern-slate), var(--modern-secondary));
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--modern-secondary), var(--modern-accent));
+}
+
+/* 3D Scene specific styles - Clean container for brain universe */
+.scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Above background but below content */
+  pointer-events: none; /* Let scroll events pass through to content */
+  overflow: hidden;
+  background: transparent; /* No background - let body show through */
+}
+
+.content-overlay {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  background: transparent;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: visible; /* Allow Lenis to handle scrolling */
+  overflow-x: hidden;
+}
+
+/* Ensure the main layout div doesn't interfere with scrolling or 3D */
+.main-layout-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: auto;
+  touch-action: auto; /* Allow touch scrolling */
+  background: transparent;
+}
+
+/* Fix for potential Three.js canvas positioning issues */
+canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important; /* Above dark background, below content */
+  /* Ensure it's visible and overlays properly */
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: screen; /* Blend with dark background */
+}
+
+/* Simple transparent containers - No glass effects to show 3D canvas */
+.glass {
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+}
+
+.glass-dark {
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+}
+
+/* Enhanced text contrast for 3D background visibility */
+.text-enhanced {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Brain region content enhancement for better readability */
+.brain-region-consciousness .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-memory .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-creativity .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-logic .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+/* Brain region individual content enhancement - Stronger opacity for content divs */
+.brain-region-consciousness .relative.z-10,
+.brain-region-consciousness .glass,
+.brain-region-consciousness .glass-dark,
+.brain-region-consciousness .content-wrapper,
+.brain-region-consciousness .page-section > div {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(59, 130, 246, 0.15);
+}
+
+.brain-region-memory .relative.z-10,
+.brain-region-memory .glass,
+.brain-region-memory .glass-dark,
+.brain-region-memory .content-wrapper,
+.brain-region-memory .page-section > div {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1), inset 0 1px 0 rgba(139, 92, 246, 0.15);
+}
+
+.brain-region-creativity .relative.z-10,
+.brain-region-creativity .glass,
+.brain-region-creativity .glass-dark,
+.brain-region-creativity .content-wrapper,
+.brain-region-creativity .page-section > div {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.25) 0%, rgba(6, 182, 212, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(6, 182, 212, 0.15);
+}
+
+.brain-region-logic .relative.z-10,
+.brain-region-logic .glass,
+.brain-region-logic .glass-dark,
+.brain-region-logic .content-wrapper,
+.brain-region-logic .page-section > div {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(16, 185, 129, 0.15);
+}
+
+/* Enhanced hover effects for individual content divs */
+.brain-region-consciousness .relative.z-10:hover,
+.brain-region-consciousness .glass:hover,
+.brain-region-consciousness .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.35) 0%, rgba(59, 130, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(59, 130, 246, 0.2) !important;
+}
+
+.brain-region-memory .relative.z-10:hover,
+.brain-region-memory .glass:hover,
+.brain-region-memory .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(139, 92, 246, 0.2) !important;
+}
+
+.brain-region-creativity .relative.z-10:hover,
+.brain-region-creativity .glass:hover,
+.brain-region-creativity .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(6, 182, 212, 0.2) !important;
+}
+
+.brain-region-logic .relative.z-10:hover,
+.brain-region-logic .glass:hover,
+.brain-region-logic .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Accessibility and safety enhancements */
+.gentle-brain-effects {
+  transition: all 0.3s ease;
+}
+
+/* Reduced motion support - Critical for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .brain-nav *,
+  .brain-region-* {
+    animation: none !important;
+    transition: opacity 0.1s ease !important;
+  }
+  
+  /* Disable 3D effects for users who need it */
+  canvas {
+    opacity: 0.1 !important;
+  }
+  
+  .neural-pulse,
+  .synaptic-fire,
+  .memory-fade,
+  .thought-transition {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --accent: #475569;
+  --secondary: #64748b;
+  --modern-dark: #020617;
+  --modern-slate: #475569;
+  --modern-secondary: #64748b;
+  --modern-accent: #334155;
+  --modern-subtle: #1e293b;
+}
+
+/* Custom CSS variables for theming */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Remove scroll-behavior to let Lenis handle all smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  /* Let Lenis control scroll behavior completely */
+}
+
+body {
+  background: #0f172a !important; /* Simple dark background that won't repeat */
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* Let Lenis handle vertical scrolling */
+  line-height: 1.6;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  touch-action: auto; /* Enable touch scrolling */
+}
+
+/* Ensure the main content has enough height to scroll */
+main {
+  min-height: 400vh; /* Force content to be tall enough to scroll */
+  position: relative;
+  z-index: 10;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--modern-slate), var(--modern-secondary));
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--modern-secondary), var(--modern-accent));
+}
+
+/* 3D Scene specific styles - Clean container for brain universe */
+.scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Above background but below content */
+  pointer-events: none; /* Let scroll events pass through to content */
+  overflow: hidden;
+  background: transparent; /* No background - let body show through */
+}
+
+.content-overlay {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  background: transparent;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: visible; /* Allow Lenis to handle scrolling */
+  overflow-x: hidden;
+}
+
+/* Ensure the main layout div doesn't interfere with scrolling or 3D */
+.main-layout-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: auto;
+  touch-action: auto; /* Allow touch scrolling */
+  background: transparent;
+}
+
+/* Fix for potential Three.js canvas positioning issues */
+canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important; /* Above dark background, below content */
+  /* Ensure it's visible and overlays properly */
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: screen; /* Blend with dark background */
+}
+
+/* Simple transparent containers - No glass effects to show 3D canvas */
+.glass {
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+}
+
+.glass-dark {
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+}
+
+/* Enhanced text contrast for 3D background visibility */
+.text-enhanced {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Brain region content enhancement for better readability */
+.brain-region-consciousness .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-memory .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-creativity .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-logic .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+/* Brain region individual content enhancement - Stronger opacity for content divs */
+.brain-region-consciousness .relative.z-10,
+.brain-region-consciousness .glass,
+.brain-region-consciousness .glass-dark,
+.brain-region-consciousness .content-wrapper,
+.brain-region-consciousness .page-section > div {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(59, 130, 246, 0.15);
+}
+
+.brain-region-memory .relative.z-10,
+.brain-region-memory .glass,
+.brain-region-memory .glass-dark,
+.brain-region-memory .content-wrapper,
+.brain-region-memory .page-section > div {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1), inset 0 1px 0 rgba(139, 92, 246, 0.15);
+}
+
+.brain-region-creativity .relative.z-10,
+.brain-region-creativity .glass,
+.brain-region-creativity .glass-dark,
+.brain-region-creativity .content-wrapper,
+.brain-region-creativity .page-section > div {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.25) 0%, rgba(6, 182, 212, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(6, 182, 212, 0.15);
+}
+
+.brain-region-logic .relative.z-10,
+.brain-region-logic .glass,
+.brain-region-logic .glass-dark,
+.brain-region-logic .content-wrapper,
+.brain-region-logic .page-section > div {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(16, 185, 129, 0.15);
+}
+
+/* Enhanced hover effects for individual content divs */
+.brain-region-consciousness .relative.z-10:hover,
+.brain-region-consciousness .glass:hover,
+.brain-region-consciousness .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.35) 0%, rgba(59, 130, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(59, 130, 246, 0.2) !important;
+}
+
+.brain-region-memory .relative.z-10:hover,
+.brain-region-memory .glass:hover,
+.brain-region-memory .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(139, 92, 246, 0.2) !important;
+}
+
+.brain-region-creativity .relative.z-10:hover,
+.brain-region-creativity .glass:hover,
+.brain-region-creativity .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(6, 182, 212, 0.2) !important;
+}
+
+.brain-region-logic .relative.z-10:hover,
+.brain-region-logic .glass:hover,
+.brain-region-logic .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Accessibility and safety enhancements */
+.gentle-brain-effects {
+  transition: all 0.3s ease;
+}
+
+/* Reduced motion support - Critical for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .brain-nav *,
+  .brain-region-* {
+    animation: none !important;
+    transition: opacity 0.1s ease !important;
+  }
+  
+  /* Disable 3D effects for users who need it */
+  canvas {
+    opacity: 0.1 !important;
+  }
+  
+  .neural-pulse,
+  .synaptic-fire,
+  .memory-fade,
+  .thought-transition {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --accent: #475569;
+  --secondary: #64748b;
+  --modern-dark: #020617;
+  --modern-slate: #475569;
+  --modern-secondary: #64748b;
+  --modern-accent: #334155;
+  --modern-subtle: #1e293b;
+}
+
+/* Custom CSS variables for theming */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Remove scroll-behavior to let Lenis handle all smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  /* Let Lenis control scroll behavior completely */
+}
+
+body {
+  background: #0f172a !important; /* Simple dark background that won't repeat */
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* Let Lenis handle vertical scrolling */
+  line-height: 1.6;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  touch-action: auto; /* Enable touch scrolling */
+}
+
+/* Ensure the main content has enough height to scroll */
+main {
+  min-height: 400vh; /* Force content to be tall enough to scroll */
+  position: relative;
+  z-index: 10;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--modern-slate), var(--modern-secondary));
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--modern-secondary), var(--modern-accent));
+}
+
+/* 3D Scene specific styles - Clean container for brain universe */
+.scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Above background but below content */
+  pointer-events: none; /* Let scroll events pass through to content */
+  overflow: hidden;
+  background: transparent; /* No background - let body show through */
+}
+
+.content-overlay {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  background: transparent;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: visible; /* Allow Lenis to handle scrolling */
+  overflow-x: hidden;
+}
+
+/* Ensure the main layout div doesn't interfere with scrolling or 3D */
+.main-layout-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: auto;
+  touch-action: auto; /* Allow touch scrolling */
+  background: transparent;
+}
+
+/* Fix for potential Three.js canvas positioning issues */
+canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important; /* Above dark background, below content */
+  /* Ensure it's visible and overlays properly */
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: screen; /* Blend with dark background */
+}
+
+/* Simple transparent containers - No glass effects to show 3D canvas */
+.glass {
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+}
+
+.glass-dark {
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+}
+
+/* Enhanced text contrast for 3D background visibility */
+.text-enhanced {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Brain region content enhancement for better readability */
+.brain-region-consciousness .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-memory .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-creativity .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-logic .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+/* Brain region individual content enhancement - Stronger opacity for content divs */
+.brain-region-consciousness .relative.z-10,
+.brain-region-consciousness .glass,
+.brain-region-consciousness .glass-dark,
+.brain-region-consciousness .content-wrapper,
+.brain-region-consciousness .page-section > div {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(59, 130, 246, 0.15);
+}
+
+.brain-region-memory .relative.z-10,
+.brain-region-memory .glass,
+.brain-region-memory .glass-dark,
+.brain-region-memory .content-wrapper,
+.brain-region-memory .page-section > div {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1), inset 0 1px 0 rgba(139, 92, 246, 0.15);
+}
+
+.brain-region-creativity .relative.z-10,
+.brain-region-creativity .glass,
+.brain-region-creativity .glass-dark,
+.brain-region-creativity .content-wrapper,
+.brain-region-creativity .page-section > div {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.25) 0%, rgba(6, 182, 212, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(6, 182, 212, 0.15);
+}
+
+.brain-region-logic .relative.z-10,
+.brain-region-logic .glass,
+.brain-region-logic .glass-dark,
+.brain-region-logic .content-wrapper,
+.brain-region-logic .page-section > div {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(16, 185, 129, 0.15);
+}
+
+/* Enhanced hover effects for individual content divs */
+.brain-region-consciousness .relative.z-10:hover,
+.brain-region-consciousness .glass:hover,
+.brain-region-consciousness .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.35) 0%, rgba(59, 130, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(59, 130, 246, 0.2) !important;
+}
+
+.brain-region-memory .relative.z-10:hover,
+.brain-region-memory .glass:hover,
+.brain-region-memory .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(139, 92, 246, 0.2) !important;
+}
+
+.brain-region-creativity .relative.z-10:hover,
+.brain-region-creativity .glass:hover,
+.brain-region-creativity .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(6, 182, 212, 0.2) !important;
+}
+
+.brain-region-logic .relative.z-10:hover,
+.brain-region-logic .glass:hover,
+.brain-region-logic .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Accessibility and safety enhancements */
+.gentle-brain-effects {
+  transition: all 0.3s ease;
+}
+
+/* Reduced motion support - Critical for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .brain-nav *,
+  .brain-region-* {
+    animation: none !important;
+    transition: opacity 0.1s ease !important;
+  }
+  
+  /* Disable 3D effects for users who need it */
+  canvas {
+    opacity: 0.1 !important;
+  }
+  
+  .neural-pulse,
+  .synaptic-fire,
+  .memory-fade,
+  .thought-transition {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --accent: #475569;
+  --secondary: #64748b;
+  --modern-dark: #020617;
+  --modern-slate: #475569;
+  --modern-secondary: #64748b;
+  --modern-accent: #334155;
+  --modern-subtle: #1e293b;
+}
+
+/* Custom CSS variables for theming */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Remove scroll-behavior to let Lenis handle all smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  /* Let Lenis control scroll behavior completely */
+}
+
+body {
+  background: #0f172a !important; /* Simple dark background that won't repeat */
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* Let Lenis handle vertical scrolling */
+  line-height: 1.6;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  touch-action: auto; /* Enable touch scrolling */
+}
+
+/* Ensure the main content has enough height to scroll */
+main {
+  min-height: 400vh; /* Force content to be tall enough to scroll */
+  position: relative;
+  z-index: 10;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--modern-slate), var(--modern-secondary));
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--modern-secondary), var(--modern-accent));
+}
+
+/* 3D Scene specific styles - Clean container for brain universe */
+.scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Above background but below content */
+  pointer-events: none; /* Let scroll events pass through to content */
+  overflow: hidden;
+  background: transparent; /* No background - let body show through */
+}
+
+.content-overlay {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  background: transparent;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: visible; /* Allow Lenis to handle scrolling */
+  overflow-x: hidden;
+}
+
+/* Ensure the main layout div doesn't interfere with scrolling or 3D */
+.main-layout-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: auto;
+  touch-action: auto; /* Allow touch scrolling */
+  background: transparent;
+}
+
+/* Fix for potential Three.js canvas positioning issues */
+canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important; /* Above dark background, below content */
+  /* Ensure it's visible and overlays properly */
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: screen; /* Blend with dark background */
+}
+
+/* Simple transparent containers - No glass effects to show 3D canvas */
+.glass {
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+}
+
+.glass-dark {
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+}
+
+/* Enhanced text contrast for 3D background visibility */
+.text-enhanced {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Brain region content enhancement for better readability */
+.brain-region-consciousness .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-memory .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-creativity .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-logic .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+/* Brain region individual content enhancement - Stronger opacity for content divs */
+.brain-region-consciousness .relative.z-10,
+.brain-region-consciousness .glass,
+.brain-region-consciousness .glass-dark,
+.brain-region-consciousness .content-wrapper,
+.brain-region-consciousness .page-section > div {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(59, 130, 246, 0.15);
+}
+
+.brain-region-memory .relative.z-10,
+.brain-region-memory .glass,
+.brain-region-memory .glass-dark,
+.brain-region-memory .content-wrapper,
+.brain-region-memory .page-section > div {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1), inset 0 1px 0 rgba(139, 92, 246, 0.15);
+}
+
+.brain-region-creativity .relative.z-10,
+.brain-region-creativity .glass,
+.brain-region-creativity .glass-dark,
+.brain-region-creativity .content-wrapper,
+.brain-region-creativity .page-section > div {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.25) 0%, rgba(6, 182, 212, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(6, 182, 212, 0.15);
+}
+
+.brain-region-logic .relative.z-10,
+.brain-region-logic .glass,
+.brain-region-logic .glass-dark,
+.brain-region-logic .content-wrapper,
+.brain-region-logic .page-section > div {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(16, 185, 129, 0.15);
+}
+
+/* Enhanced hover effects for individual content divs */
+.brain-region-consciousness .relative.z-10:hover,
+.brain-region-consciousness .glass:hover,
+.brain-region-consciousness .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.35) 0%, rgba(59, 130, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(59, 130, 246, 0.2) !important;
+}
+
+.brain-region-memory .relative.z-10:hover,
+.brain-region-memory .glass:hover,
+.brain-region-memory .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(139, 92, 246, 0.2) !important;
+}
+
+.brain-region-creativity .relative.z-10:hover,
+.brain-region-creativity .glass:hover,
+.brain-region-creativity .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(6, 182, 212, 0.2) !important;
+}
+
+.brain-region-logic .relative.z-10:hover,
+.brain-region-logic .glass:hover,
+.brain-region-logic .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Accessibility and safety enhancements */
+.gentle-brain-effects {
+  transition: all 0.3s ease;
+}
+
+/* Reduced motion support - Critical for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .brain-nav *,
+  .brain-region-* {
+    animation: none !important;
+    transition: opacity 0.1s ease !important;
+  }
+  
+  /* Disable 3D effects for users who need it */
+  canvas {
+    opacity: 0.1 !important;
+  }
+  
+  .neural-pulse,
+  .synaptic-fire,
+  .memory-fade,
+  .thought-transition {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --accent: #475569;
+  --secondary: #64748b;
+  --modern-dark: #020617;
+  --modern-slate: #475569;
+  --modern-secondary: #64748b;
+  --modern-accent: #334155;
+  --modern-subtle: #1e293b;
+}
+
+/* Custom CSS variables for theming */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Remove scroll-behavior to let Lenis handle all smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  /* Let Lenis control scroll behavior completely */
+}
+
+body {
+  background: #0f172a !important; /* Simple dark background that won't repeat */
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* Let Lenis handle vertical scrolling */
+  line-height: 1.6;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  touch-action: auto; /* Enable touch scrolling */
+}
+
+/* Ensure the main content has enough height to scroll */
+main {
+  min-height: 400vh; /* Force content to be tall enough to scroll */
+  position: relative;
+  z-index: 10;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, var(--modern-slate), var(--modern-secondary));
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, var(--modern-secondary), var(--modern-accent));
+}
+
+/* 3D Scene specific styles - Clean container for brain universe */
+.scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* Above background but below content */
+  pointer-events: none; /* Let scroll events pass through to content */
+  overflow: hidden;
+  background: transparent; /* No background - let body show through */
+}
+
+.content-overlay {
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  background: transparent;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: visible; /* Allow Lenis to handle scrolling */
+  overflow-x: hidden;
+}
+
+/* Ensure the main layout div doesn't interfere with scrolling or 3D */
+.main-layout-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: auto;
+  touch-action: auto; /* Allow touch scrolling */
+  background: transparent;
+}
+
+/* Fix for potential Three.js canvas positioning issues */
+canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 0 !important; /* Above dark background, below content */
+  /* Ensure it's visible and overlays properly */
+  opacity: 1 !important;
+  visibility: visible !important;
+  mix-blend-mode: screen; /* Blend with dark background */
+}
+
+/* Simple transparent containers - No glass effects to show 3D canvas */
+.glass {
+  background: transparent;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+}
+
+.glass-dark {
+  background: transparent;
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+}
+
+/* Enhanced text contrast for 3D background visibility */
+.text-enhanced {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Brain region content enhancement for better readability */
+.brain-region-consciousness .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-memory .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-creativity .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+.brain-region-logic .relative.z-10 {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.08) 0%, rgba(15, 23, 42, 0.4) 60%, transparent 90%);
+  backdrop-filter: blur(2px);
+}
+
+/* Brain region individual content enhancement - Stronger opacity for content divs */
+.brain-region-consciousness .relative.z-10,
+.brain-region-consciousness .glass,
+.brain-region-consciousness .glass-dark,
+.brain-region-consciousness .content-wrapper,
+.brain-region-consciousness .page-section > div {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.25) 0%, rgba(59, 130, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1), inset 0 1px 0 rgba(59, 130, 246, 0.15);
+}
+
+.brain-region-memory .relative.z-10,
+.brain-region-memory .glass,
+.brain-region-memory .glass-dark,
+.brain-region-memory .content-wrapper,
+.brain-region-memory .page-section > div {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.25) 0%, rgba(139, 92, 246, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1), inset 0 1px 0 rgba(139, 92, 246, 0.15);
+}
+
+.brain-region-creativity .relative.z-10,
+.brain-region-creativity .glass,
+.brain-region-creativity .glass-dark,
+.brain-region-creativity .content-wrapper,
+.brain-region-creativity .page-section > div {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.25) 0%, rgba(6, 182, 212, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 4px 20px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(6, 182, 212, 0.15);
+}
+
+.brain-region-logic .relative.z-10,
+.brain-region-logic .glass,
+.brain-region-logic .glass-dark,
+.brain-region-logic .content-wrapper,
+.brain-region-logic .page-section > div {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.25) 0%, rgba(16, 185, 129, 0.15) 40%, rgba(15, 23, 42, 0.8) 80%, transparent 100%) !important;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(16, 185, 129, 0.15);
+}
+
+/* Enhanced hover effects for individual content divs */
+.brain-region-consciousness .relative.z-10:hover,
+.brain-region-consciousness .glass:hover,
+.brain-region-consciousness .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.35) 0%, rgba(59, 130, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(59, 130, 246, 0.2) !important;
+}
+
+.brain-region-memory .relative.z-10:hover,
+.brain-region-memory .glass:hover,
+.brain-region-memory .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(139, 92, 246, 0.2) !important;
+}
+
+.brain-region-creativity .relative.z-10:hover,
+.brain-region-creativity .glass:hover,
+.brain-region-creativity .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(6, 182, 212, 0.35) 0%, rgba(6, 182, 212, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(6, 182, 212, 0.2) !important;
+}
+
+.brain-region-logic .relative.z-10:hover,
+.brain-region-logic .glass:hover,
+.brain-region-logic .glass-dark:hover {
+  background: radial-gradient(circle at center, rgba(16, 185, 129, 0.35) 0%, rgba(16, 185, 129, 0.2) 40%, rgba(15, 23, 42, 0.85) 80%, transparent 100%) !important;
+  box-shadow: 0 6px 25px rgba(16, 185, 129, 0.15), inset 0 1px 0 rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Accessibility and safety enhancements */
+.gentle-brain-effects {
+  transition: all 0.3s ease;
+}
+
+/* Reduced motion support - Critical for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .brain-nav *,
+  .brain-region-* {
+    animation: none !important;
+    transition: opacity 0.1s ease !important;
+  }
+  
+  /* Disable 3D effects for users who need it */
+  canvas {
+    opacity: 0.1 !important;
+  }
+  
+  .neural-pulse,
+  .synaptic-fire,
+  .memory-fade,
+  .thought-transition {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+:root {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --accent: #475569;
+  --secondary: #64748b;
+  --modern-dark: #020617;
+  --modern-slate: #475569;
+  --modern-secondary: #64748b;
+  --modern-accent: #334155;
+  --modern-subtle: #1e293b;
+}
+
+/* Custom CSS variables for theming */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f8fafc;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Remove scroll-behavior to let Lenis handle all smooth scrolling */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  /* Let Lenis control scroll behavior completely */
+}
+
+body {
+  background: #0f172a !important; /* Simple dark background that won't repeat */
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* Let Lenis handle vertical scrolling */
+  line-height: 1.6;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  touch-action: auto; /* Enable touch scrolling */
+}

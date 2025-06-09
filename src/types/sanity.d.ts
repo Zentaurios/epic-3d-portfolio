@@ -1,0 +1,1 @@
+// Sanity client type augmentation to fix typing issues\ndeclare module '@sanity/client' {\n  interface SanityClient {\n    fetch<T = any>(query: string, params?: Record<string, any>): Promise<T>\n  }\n}\n\nexport {}\n
