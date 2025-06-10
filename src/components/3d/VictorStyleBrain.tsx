@@ -52,10 +52,23 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
   const connections: BrainConnection[] = []
   const brainMeshes: BrainMesh[] = []
 
-  // Create anatomically accurate brain hemisphere geometry
+  // Create anatomically accurate brain sphere geometry (now full spheres)
+  // Create anatomically accurate brain hemisphere geometry (now oblong ellipsoids)
   const createBrainHemisphere = (isLeft: boolean) => {
-    const hemisphere = new THREE.SphereGeometry(12, config.detail, config.detail, 0, Math.PI)
+    const hemisphere = new THREE.SphereGeometry(12, config.detail, config.detail)
     const vertices = hemisphere.attributes.position.array as Float32Array
+    
+    // Transform sphere into oblong ellipsoid (elongated front-to-back) FIRST
+    for (let i = 0; i < vertices.length; i += 3) {
+      const x = vertices[i]
+      const y = vertices[i + 1]
+      const z = vertices[i + 2]
+      
+      // Apply ellipsoid scaling: wider front-to-back (Z), narrower sides (X), slightly compressed top-bottom (Y)
+      vertices[i] = x * 0.85      // Compress width (left-right)
+      vertices[i + 1] = y * 0.9   // Slightly compress height (top-bottom)
+      vertices[i + 2] = z * 1.3   // Elongate depth (front-back)
+    }
     
     // Transform into realistic brain shape with cortical folds
     for (let i = 0; i < vertices.length; i += 3) {
@@ -98,7 +111,7 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
     
     return {
       geometry: hemisphere,
-      position: [isLeft ? -7 : 7, 2, 2] as [number, number, number],
+      position: [isLeft ? -10 : 10, 2, 2] as [number, number, number],
       color: isLeft ? '#4f46e5' : '#6366f1'
     }
   }
@@ -150,12 +163,12 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
   
   brainMeshes.push(leftHemisphere, rightHemisphere, cerebellum, brainStem)
 
-  // Create nodes distributed across brain regions
+  // Create nodes distributed across brain regions (adjusted for ellipsoid shape)
   const brainRegions = [
-    { center: [-7, 4, 4], radius: 8, density: Math.floor(config.nodes * 0.3), type: 'cortex' },
-    { center: [7, 4, 4], radius: 8, density: Math.floor(config.nodes * 0.3), type: 'cortex' },
-    { center: [0, -10, -8], radius: 5, density: Math.floor(config.nodes * 0.2), type: 'cerebellum' },
-    { center: [0, -6, -3], radius: 3, density: Math.floor(config.nodes * 0.1), type: 'stem' },
+    { center: [-8.5, 4, 5], radius: 8, density: Math.floor(config.nodes * 0.3), type: 'cortex' },
+    { center: [8.5, 4, 5], radius: 8, density: Math.floor(config.nodes * 0.3), type: 'cortex' },
+    { center: [0, -10, -10], radius: 5, density: Math.floor(config.nodes * 0.2), type: 'cerebellum' },
+    { center: [0, -6, -4], radius: 3, density: Math.floor(config.nodes * 0.1), type: 'stem' },
     { center: [0, 2, 0], radius: 10, density: Math.floor(config.nodes * 0.1), type: 'corpus' }
   ]
 
@@ -489,15 +502,31 @@ export function useVictorBrainActivity(speed: number = 0.3) {
     
     let animationId: number
     
+    // Mobile detection
+    const isMobile = typeof window !== 'undefined' && (
+      window.innerWidth <= 768 || 
+      window.innerHeight <= 768 || 
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+      'ontouchstart' in window
+    )
+    
     // Speed-controlled updates
     const updateActivity = () => {
       const time = Date.now() * 0.002 * speed // Apply speed control
       
-      // Speed-controlled scroll responsiveness
-      const scrollPercent = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1)
+      let neuralValue: number
+      
+      if (isMobile) {
+        // On mobile, use time-based animation instead of scroll
+        neuralValue = Math.sin(time * 0.3) * 0.3 + 0.5
+      } else {
+        // On desktop, use scroll responsiveness
+        const scrollPercent = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1)
+        neuralValue = Math.min(1, scrollPercent * 1.8 + 0.2)
+      }
       
       setActivity({
-        neural: Math.min(1, scrollPercent * 1.8 + 0.2),
+        neural: neuralValue,
         synaptic: Math.sin(time * 0.8) * 0.3 + 0.7,
         cognitive: Math.cos(time * 0.5 + 1) * 0.4 + 0.6
       })
@@ -505,20 +534,26 @@ export function useVictorBrainActivity(speed: number = 0.3) {
       animationId = requestAnimationFrame(updateActivity)
     }
     
-    // Add scroll listener for immediate response
+    // Only add scroll listener on desktop
     const handleScroll = () => {
-      const scrollPercent = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1)
-      setActivity(prev => ({
-        ...prev,
-        neural: Math.min(1, scrollPercent * 1.8 + 0.2)
-      }))
+      if (!isMobile) {
+        const scrollPercent = Math.min(window.scrollY / (document.body.scrollHeight - window.innerHeight), 1)
+        setActivity(prev => ({
+          ...prev,
+          neural: Math.min(1, scrollPercent * 1.8 + 0.2)
+        }))
+      }
     }
     
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    if (!isMobile) {
+      window.addEventListener('scroll', handleScroll, { passive: true })
+    }
     updateActivity()
     
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      if (!isMobile) {
+        window.removeEventListener('scroll', handleScroll)
+      }
       cancelAnimationFrame(animationId)
     }
   }, [speed])

@@ -44,8 +44,6 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
       }
     }
 
-    const completedDate = project.completedAt ? new Date(project.completedAt).toISOString() : new Date().toISOString()
-
     return {
       title: `${project.title} | Webb3Fitty Projects`,
       description: project.description || `Explore ${project.title} - a cutting-edge project by Webb3Fitty`,

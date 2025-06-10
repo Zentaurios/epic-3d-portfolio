@@ -40,7 +40,9 @@ html {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto; /* Enable scrolling */
-  scroll-behavior: auto !important; /* Let Lenis handle smooth scrolling */
+  /* Mobile specific fixes */
+  -webkit-overflow-scrolling: touch;
+  touch-action: manipulation;
 }
 
 body {
@@ -55,7 +57,10 @@ body {
   width: 100%;
   min-height: 100vh;
   position: relative;
-  touch-action: auto;
+  touch-action: manipulation;
+  /* Mobile scroll fixes */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 main {
@@ -63,6 +68,9 @@ main {
   height: auto; /* Allow content to expand */
   position: relative;
   z-index: 10;
+  /* Mobile scroll compatibility */
+  overflow: visible;
+  touch-action: manipulation;
 }
 
 /* =============================================
@@ -426,5 +434,109 @@ h1, h2, h3, h4, h5, h6 {
   :root {
     --background: #0f172a;
     --foreground: #f8fafc;
+  }
+}
+
+/* =============================================
+   MOBILE SCROLL FIXES - AGGRESSIVE
+   ============================================= */
+
+/* Universal mobile scrolling fixes */
+@media (max-width: 768px) {
+  /* ULTRA AGGRESSIVE: Reset all height constraints on mobile */
+  html, body {
+    height: auto !important;
+    min-height: 100vh !important;
+    max-height: none !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: manipulation !important;
+    overscroll-behavior: contain !important;
+    scroll-behavior: auto !important; /* Remove smooth for mobile */
+    position: relative !important;
+  }
+  
+  /* Main content container - ensure it can expand */
+  main {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    position: relative !important;
+    touch-action: auto !important;
+  }
+  
+  /* Force all sections to have content height */
+  section, div {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  
+  /* Ensure canvas doesn't interfere with scrolling on mobile */
+  canvas {
+    touch-action: none !important;
+    pointer-events: none !important;
+    position: fixed !important;
+    opacity: 1 !important; /* Full opacity on mobile for debugging */
+    z-index: -1 !important;
+    display: block !important;
+    visibility: visible !important;
+  }
+  
+  /* Remove any fixed heights that might interfere */
+  .brain-region {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 2rem 1rem !important;
+  }
+  
+  .page-section {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 1rem !important;
+  }
+  
+  /* Disable Lenis on mobile completely */
+  [data-lenis-prevent] {
+    overscroll-behavior: auto !important;
+    touch-action: auto !important;
+  }
+}
+
+/* iOS specific fixes - more aggressive */
+@supports (-webkit-touch-callout: none) {
+  html, body {
+    -webkit-overflow-scrolling: touch !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    position: relative !important;
+  }
+  
+  main {
+    height: auto !important;
+    transform: translateZ(0) !important; /* Force hardware acceleration */
+    overflow: visible !important;
+    position: relative !important;
+  }
+  
+  /* Fix for iOS Safari */
+  body {
+    min-height: -webkit-fill-available !important;
+  }
+}
+
+/* Tablet specific fixes */
+@media (max-width: 1024px) and (min-width: 769px) {
+  html, body {
+    overflow-y: auto !important;
+    height: auto !important;
+  }
+  
+  main {
+    height: auto !important;
+    overflow: visible !important;
   }
 }

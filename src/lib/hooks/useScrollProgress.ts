@@ -1,69 +1,75 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 interface UseScrollProgressOptions {
-  smoothing?: number
   onProgress?: (progress: number) => void
 }
 
-export function useScrollProgress({ smoothing = 0.1, onProgress }: UseScrollProgressOptions = {}) {
+export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {}) {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down')
   const [isScrolling, setIsScrolling] = useState(false)
   
-  useEffect(() => {
-    let lastScrollY = 0
-    let scrollTimeoutId: NodeJS.Timeout
-    let targetProgress = 0
+  // Use refs to avoid dependency issues
+  const onProgressRef = useRef(onProgress)
+  const lastScrollYRef = useRef(0)
+  const scrollTimeoutIdRef = useRef<NodeJS.Timeout>()
+  
+  // Update ref when onProgress changes
+  onProgressRef.current = onProgress
+  
+  // Stable callback that won't change on re-renders
+  const updateScrollProgress = useCallback(() => {
+    // Use Lenis scroll value if available, fallback to native scroll
+    const lenis = (window as { lenis?: { 
+      scroll: number; 
+      on: (event: string, callback: () => void) => void; 
+      off: (event: string, callback: () => void) => void 
+    } }).lenis
+    const scrollY = lenis ? lenis.scroll : window.scrollY
     
-    const updateScrollProgress = () => {
-      // Use Lenis scroll value if available, fallback to native scroll
-      const lenis = (window as { lenis?: { 
-        scroll: number; 
-        on: (event: string, callback: () => void) => void; 
-        off: (event: string, callback: () => void) => void 
-      } }).lenis
-      const scrollY = lenis ? lenis.scroll : window.scrollY
-      
-      // Get proper document height
-      const documentHeight = Math.max(
-        document.body.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.clientHeight,
-        document.documentElement.scrollHeight,
-        document.documentElement.offsetHeight
-      )
-      
-      const windowHeight = window.innerHeight
-      const maxScroll = documentHeight - windowHeight
-      
-      // Calculate normalized scroll progress (0 to 1)
-      targetProgress = maxScroll > 0 ? Math.min(Math.max(scrollY / maxScroll, 0), 1) : 0
-      
-      // Determine scroll direction
-      if (scrollY > lastScrollY) {
-        setScrollDirection('down')
-      } else if (scrollY < lastScrollY) {
-        setScrollDirection('up')
-      }
-      
-      lastScrollY = scrollY
-      setIsScrolling(true)
-      
-      // Update progress immediately for better responsiveness
-      setScrollProgress(targetProgress)
-      onProgress?.(targetProgress)
-      
-      // Clear existing timeout
-      clearTimeout(scrollTimeoutId)
-      
-      // Set timeout to detect when scrolling stops
-      scrollTimeoutId = setTimeout(() => {
-        setIsScrolling(false)
-      }, 150)
+    // Get proper document height
+    const documentHeight = Math.max(
+      document.body.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight,
+      document.documentElement.offsetHeight
+    )
+    
+    const windowHeight = window.innerHeight
+    const maxScroll = documentHeight - windowHeight
+    
+    // Calculate normalized scroll progress (0 to 1)
+    const targetProgress = maxScroll > 0 ? Math.min(Math.max(scrollY / maxScroll, 0), 1) : 0
+    
+    // Determine scroll direction
+    if (scrollY > lastScrollYRef.current) {
+      setScrollDirection('down')
+    } else if (scrollY < lastScrollYRef.current) {
+      setScrollDirection('up')
     }
     
+    lastScrollYRef.current = scrollY
+    setIsScrolling(true)
+    
+    // Update progress immediately for better responsiveness
+    setScrollProgress(targetProgress)
+    onProgressRef.current?.(targetProgress)
+    
+    // Clear existing timeout
+    if (scrollTimeoutIdRef.current) {
+      clearTimeout(scrollTimeoutIdRef.current)
+    }
+    
+    // Set timeout to detect when scrolling stops
+    scrollTimeoutIdRef.current = setTimeout(() => {
+      setIsScrolling(false)
+    }, 150)
+  }, []) // Empty dependency array - function is stable
+  
+  useEffect(() => {
     // Listen to both Lenis and native scroll events
     const lenis = (window as { lenis?: { 
       scroll: number; 
@@ -88,9 +94,11 @@ export function useScrollProgress({ smoothing = 0.1, onProgress }: UseScrollProg
       } else {
         window.removeEventListener('scroll', updateScrollProgress)
       }
-      clearTimeout(scrollTimeoutId)
+      if (scrollTimeoutIdRef.current) {
+        clearTimeout(scrollTimeoutIdRef.current)
+      }
     }
-  }, [smoothing, onProgress])
+  }, [updateScrollProgress]) // Only depend on the stable callback
   
   return {
     scrollProgress,

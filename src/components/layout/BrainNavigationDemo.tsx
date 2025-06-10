@@ -53,6 +53,11 @@ export function BrainNavigationDemo() {
       transitionType: 'neural-pulse',
       intensity: 1.5
     })
+    
+    // Close navigation after 1 second to give visual feedback
+    setTimeout(() => {
+      setIsExpanded(false)
+    }, 1000)
   }
 
   return (

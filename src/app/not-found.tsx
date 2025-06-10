@@ -46,7 +46,7 @@ export default function NotFound() {
           
           <p className="max-w-lg mx-auto mb-8 text-xl leading-relaxed text-red-200/80">
             Looks like this neural pathway got a bit too creative. 
-            The page you're looking for has wandered off into the digital void.
+            The page you&apos;re looking for has wandered off into the digital void.
           </p>
         </div>
 
@@ -75,7 +75,7 @@ export default function NotFound() {
 
         {/* Recovery Message */}
         <p className="mt-6 text-sm italic text-red-300/60">
-          Don't worry, we'll get this brain back to normal functioning.
+          Don&apos;t worry, we&apos;ll get this brain back to normal functioning.
         </p>
 
         {/* Floating Error Particles */}

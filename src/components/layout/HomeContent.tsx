@@ -28,8 +28,8 @@ interface HomeContentProps {
 }
 
 export function HomeContent({ content }: HomeContentProps) {
-  const { navigateWithTransition, currentRegion } = useNavigationManager()
-  const { activeSection, getSectionProgress } = useSectionNavigation()
+  const { navigateWithTransition  } = useNavigationManager()
+  const { getSectionProgress } = useSectionNavigation()
   
   const navigateToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
@@ -96,7 +96,7 @@ export function HomeContent({ content }: HomeContentProps) {
           <section 
             id="about" 
             data-section="about"
-            className="flex items-center min-h-screen py-16 brain-region-logic"
+            className="flex items-center min-h-screen py-16 brain-region-logic md:mb-[75vh]"
           >
             <div className="relative z-10">
               <AboutSection 
@@ -107,7 +107,7 @@ export function HomeContent({ content }: HomeContentProps) {
           </section>
 
           {/* Footer Section - Neural Network Base */}
-          <footer className="relative z-10 px-4 py-12 overflow-hidden border-t border-slate-800/30 brain-region-base">
+          <footer className="relative z-10 px-4 py-8 overflow-hidden border-t border-slate-800/30 brain-region-base">
             {/* Neural network background */}
             <div className="absolute inset-0 opacity-30">
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-purple-900/20 to-black/50" />

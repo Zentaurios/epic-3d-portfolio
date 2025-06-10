@@ -1,8 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import { ArrowRight, Github as GitHubIcon, ExternalLink, Sparkles, Zap, Globe, Code2 } from 'lucide-react'
+import { ArrowRight, Github as GitHubIcon, ExternalLink, Sparkles } from 'lucide-react'
 import { Project } from '@/types'
+import FixedSpeedNeuralOverlay from '../3d/FixedSpeedNeuralOverlay'
 
 interface ExploreSectionProps {
   onNavigate: (section: string) => void
@@ -15,8 +16,7 @@ export function ExploreSection({ onNavigate, brainActivity = 0, projects = [] }:
   
   // Brain activity affects visual intensity
   const activityIntensity = Math.min(Math.max(brainActivity, 0.3), 1)
-  const creativityPulse = brainActivity * 1.2 // Higher multiplier for creativity region
-
+  
   // Use real projects data, limit to first 4 for homepage display
   const featuredProjects = projects.slice(0, 4)
 
@@ -88,6 +88,15 @@ export function ExploreSection({ onNavigate, brainActivity = 0, projects = [] }:
   return (
     <section id="explore" className="page-section">
       <div className="content-wrapper max-w-7xl">
+        <FixedSpeedNeuralOverlay 
+          brainActivity={{
+            neural: activityIntensity,
+            synaptic: activityIntensity * 0.8,
+            cognitive: activityIntensity * 1.2
+          }}
+          currentRegion="creativity"
+          opacity={0.3}
+        />
         {/* Section Header */}
         <div className="mb-16 text-center">
           <h2 className="mb-6 text-4xl font-bold md:text-6xl heading-gradient">
@@ -200,10 +209,10 @@ export function ExploreSection({ onNavigate, brainActivity = 0, projects = [] }:
         
         {/* Categories Overview */}
         <div className="grid grid-cols-1 gap-6 mb-16 md:grid-cols-3">
-          {categories.map((category, index) => (
+          {categories.map((category) => (
             <div
               key={category.name}
-              className="p-6 text-center transform cursor-pointer glass-effect transition-all duration-300 hover:scale-105"
+              className="p-6 text-center transition-all duration-300 transform cursor-pointer glass-effect hover:scale-105"
               onClick={() => onNavigate('explore')}
             >
               <div className="mb-4 text-4xl">{category.icon}</div>
@@ -220,7 +229,7 @@ export function ExploreSection({ onNavigate, brainActivity = 0, projects = [] }:
         <div className="text-center">
           <button
             onClick={() => onNavigate('explore')}
-            className="relative px-8 py-4 text-lg font-semibold text-white transform rounded-full group bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
+            className="relative px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform rounded-full shadow-lg group bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 hover:scale-105 hover:shadow-cyan-500/25"
           >
             <span className="flex items-center gap-2">
               <Sparkles className="w-5 h-5" />
@@ -235,78 +244,4 @@ export function ExploreSection({ onNavigate, brainActivity = 0, projects = [] }:
   )
 }
 
-const featuredProjects = [
-  {
-    id: 1,
-    title: 'DeFi Galaxy Protocol',
-    category: 'Web3 • DeFi',
-    description: 'A revolutionary decentralized finance protocol that enables cross-chain liquidity mining with AI-powered yield optimization. Features include automated portfolio rebalancing, smart contract security audits, and gasless transactions.',
-    technologies: ['Solidity', 'React', 'Web3.js', 'Chainlink', 'IPFS'],
-    status: 'development' as const,
-    icon: <Zap className="w-6 h-6 text-amber-300" />,
-    links: {
-      github: 'https://github.com',
-      live: null,
-    },
-  },
-  {
-    id: 2,
-    title: 'Neural Content Engine',
-    category: 'AI • Content Generation',
-    description: 'An advanced AI-powered content generation platform that creates personalized blog posts, social media content, and technical documentation. Utilizes GPT-4 integration with custom fine-tuning for technical accuracy.',
-    technologies: ['Python', 'OpenAI API', 'Next.js', 'Prisma', 'Vercel'],
-    status: 'live' as const,
-    icon: <Code2 className="w-6 h-6 text-cyan-300" />,
-    links: {
-      github: 'https://github.com/Zentaurios',
-      live: 'https://neural-content.demo',
-    },
-  },
-  {
-    id: 3,
-    title: 'Metaverse Portfolio Hub',
-    category: '3D • WebGL',
-    description: 'An immersive 3D portfolio experience built with Three.js and React Three Fiber. Features real-time physics simulations, procedural generation, and WebXR support for VR/AR experiences.',
-    technologies: ['Three.js', 'React', 'WebGL', 'GLSL', 'Blender'],
-    status: 'live' as const,
-    icon: <Globe className="w-6 h-6 text-purple-300" />,
-    links: {
-      github: 'https://github.com',
-      live: 'https://metaverse-portfolio.demo',
-    },
-  },
-  {
-    id: 4,
-    title: 'Smart Contract Auditor',
-    category: 'Security • Automation',
-    description: 'Automated smart contract security analysis tool that identifies vulnerabilities, gas optimization opportunities, and provides detailed security reports. Features machine learning-based pattern recognition.',
-    technologies: ['Rust', 'Solidity', 'Machine Learning', 'Docker', 'GraphQL'],
-    status: 'development' as const,
-    icon: <Sparkles className="w-6 h-6 text-green-300" />,
-    links: {
-      github: 'https://github.com',
-      live: null,
-    },
-  },
-]
 
-const categories = [
-  {
-    name: 'Web3 & Blockchain',
-    icon: '🚀',
-    description: 'DeFi protocols, NFT platforms, and decentralized applications',
-    projectCount: 8,
-  },
-  {
-    name: 'AI & Machine Learning',
-    icon: '🤖',
-    description: 'Intelligent applications and automated content generation',
-    projectCount: 6,
-  },
-  {
-    name: '3D & Interactive',
-    icon: '🌟',
-    description: 'Immersive 3D experiences and WebGL applications',
-    projectCount: 4,
-  },
-]

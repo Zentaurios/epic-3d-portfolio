@@ -7,6 +7,8 @@ import * as THREE from 'three'
 import { VictorStyleBrain, useVictorBrainActivity } from './VictorStyleBrain'
 import { useNavigationManager } from '@/lib/hooks/useNavigationManager'
 import { useScrollProgress } from '@/lib/hooks/useScrollProgress'
+import { MobileBrainSystem } from './MobileBrainSystem'
+import { useMobileDetection } from '@/components/providers/MobileDetectionProvider'
 
 interface LayeredBrainSystemProps {
   children?: React.ReactNode
@@ -29,9 +31,9 @@ function BrainLoadingFallback() {
   )
 }
 
-// Rotating Brain Group with proper orientation
+// Desktop Rotating Brain Group
 function RotatingBrainGroup({ 
-  brainActivity 
+  brainActivity
 }: {
   brainActivity: { neural: number; synaptic: number; cognitive: number }
 }) {
@@ -41,17 +43,18 @@ function RotatingBrainGroup({
     if (groupRef.current) {
       const time = state.clock.elapsedTime
       
-      // Initial rotation to reorient the brain (Y axis becomes X axis)
-      const baseRotationZ = Math.PI / 2 // 90 degrees around Z axis
+      // Initial rotation to reorient the brain - more upright with 45 degree left turn
+      const baseRotationZ = Math.PI / 4 // 45 degrees around Z axis (was 90 degrees)
+      const baseRotationX = -Math.PI / 4 // Slight tilt up (-30 degrees) for better view
       
-      // Continuous slow rotation around Y axis (horizontal spin)
-      const rotationY = time * 0.05
+      // Continuous slow rotation around Y axis (horizontal spin) - desktop speed
+      const rotationY = time * 0.08
       
-      // Optional: slight wobble based on brain activity
+      // Optional: slight wobble based on brain activity - desktop level
       const activityWobble = (brainActivity.neural + brainActivity.synaptic) * 0.02
       
       groupRef.current.rotation.set(
-        activityWobble, // Removed tilt - only keep activity wobble
+        baseRotationX + activityWobble, // Base tilt + activity wobble
         rotationY,
         baseRotationZ
       )
@@ -64,35 +67,56 @@ function RotatingBrainGroup({
         brainActivity={brainActivity}
         scale={1}
         animated={true}
-        opacity={0.4}
-        quality="medium"
-        animationSpeed={0.2} // VERY SLOW 3D brain animation
+        opacity={0.4} // Desktop opacity
+        quality="high" // Desktop quality
+        animationSpeed={0.25} // Desktop animation speed
       />
     </group>
   )
 }
 
-export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
+export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {  
+  // Use shared mobile detection context - this ensures consistent detection across app
+  const { isMobile, isLoading: mobileDetectionLoading } = useMobileDetection()
+  
   const { navigationState } = useNavigationManager({
     transitionDuration: 2000,
-    onRegionChange: (region) => {
-      // Region change handler
-    }
+    onRegionChange: () => {}
   })
   
   const { scrollProgress } = useScrollProgress()
-  const brainActivity = useVictorBrainActivity(0.05) // VERY SLOW brain activity hook
   
+  const brainActivity = useVictorBrainActivity(0.05)
+  
+  if (mobileDetectionLoading) {
+    return (
+      <>
+        <BrainLoadingFallback />
+        <div className="relative z-10">
+          {children}
+        </div>
+      </>
+    )
+  }
+
+  if (isMobile) {
+    return <MobileBrainSystem>{children}</MobileBrainSystem>
+  }
+
+  // Desktop rendering - all hooks have been called consistently
   const currentRegion = navigationState.brainRegion || 'consciousness'
+  
+  // Use scroll progress for desktop (mobile has already returned at this point)
+  const effectiveScrollProgress = scrollProgress
 
   return (
     <>
-      {/* Single Optimized Brain Background */}
+      {/* Brain Background - Same rendering for all devices */}
       <div className="fixed inset-0 z-[-1]">
         <Suspense fallback={<BrainLoadingFallback />}>
           <Canvas
-            frameloop="demand" // Only render when needed
-            performance={{ min: 0.2 }} // Allow lower performance
+            frameloop="always" // Always render for consistency
+            performance={{ min: 0.2 }}
             camera={{
               position: [0, 0, 60],
               fov: 75,
@@ -100,15 +124,15 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
               far: 1000
             }}
             gl={{
-              antialias: false, // Disable for performance
+              antialias: false,
               alpha: true,
-              powerPreference: "high-performance",
-              precision: "lowp" // Lower precision for speed
+              powerPreference: isMobile ? "low-power" : "high-performance",
+              precision: "lowp"
             }}
-            dpr={[1, 1.5]} // Limit device pixel ratio
+            dpr={[1, 2]} // Standard DPR for all devices
           >
             <BrainCamera
-              scrollProgress={scrollProgress}
+              scrollProgress={effectiveScrollProgress}
               region={currentRegion}
               isTransitioning={navigationState.isTransitioning}
             />
@@ -119,28 +143,25 @@ export function LayeredBrainSystem({ children }: LayeredBrainSystemProps) {
               brainActivity={brainActivity}
             />
             
-            {/* Single Large Background Brain - Victor Style - RE-ENABLED */}
-            <group scale={[2.5, 2.5, 2.5]} position={[0, 0, -15]}>
+            {/* Brain - Desktop version with scroll-based rotation */}
+            <group scale={[2.2, 2.2, 2.2]} position={[0, 0, -15]}>
               <RotatingBrainGroup brainActivity={brainActivity} />
             </group>
           </Canvas>
         </Suspense>
       </div>
 
-      {/* Content Layer - Your page content goes here */}
+      {/* Content Layer */}
       <div className="relative z-10">
         {children}
       </div>
-
     </>
   )
 }
 
-// Simplified camera system
+// Simplified camera system for desktop
 function BrainCamera({ 
-  scrollProgress, 
-  region, 
-  isTransitioning
+  scrollProgress,
 }: {
   scrollProgress: number
   region: string
@@ -154,6 +175,8 @@ function BrainCamera({
       
       // Simplified camera movement
       const brainFloat = Math.sin(time * 0.02) * 1
+      
+      // Only use scroll influence on desktop (no mobile users reach this function)
       const scrollInfluence = scrollProgress * 2
       
       cameraRef.current.position.y = brainFloat - scrollInfluence * 0.05
@@ -178,9 +201,7 @@ function BrainCamera({
 
 // Simplified lighting system
 function BrainLighting({ 
-  region, 
-  intensity, 
-  brainActivity 
+  intensity,  
 }: {
   region: string
   intensity: number

@@ -1,19 +1,76 @@
 import React from 'react';
 import type { Metadata } from 'next';
+
 export const metadata: Metadata = {
+  title: 'Contact | Webb3Fitty - Software Engineering',
+  description: 'Get in touch with Webb3Fitty for your next web development project. View pricing, schedule a meeting, or connect via social media for Web3 and AI development solutions.',
+  keywords: ['webb3fitty', 'contact', 'hire engineering', 'web development pricing', 'React Engineering', 'Next.js Engineering', 'web3 development', 'ai development'],
+  authors: [{ name: "Webb3Fitty" }],
+  creator: "Webb3Fitty",
+  publisher: "Webb3Fitty",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  
+  // OpenGraph metadata
+  openGraph: {
     title: 'Contact | Webb3Fitty - Software Engineering',
-    description: 'Get in touch with Webb3Fitty for your next web development project. View pricing, schedule a meeting, or connect via social media.',
-    keywords: ['contact', 'hire engineering', 'web development pricing', 'React Engineering', 'Next.js Engineering'],
-    openGraph: {
-        title: 'Contact Webb3Fitty - Software Engineering',
-        description: 'Ready to bring your ideas to life? Contact Webb3Fitty for custom web development solutions.',
-        type: 'website',
+    description: 'Ready to bring your ideas to life? Contact Webb3Fitty for custom web development solutions in Web3 and AI.',
+    type: 'website',
+    locale: "en_US",
+    url: 'https://webb3fitty.dev/contact',
+    siteName: "Webb3Fitty",
+    images: [
+      {
+        url: "https://webb3fitty.dev/webb3fitty.png",
+        width: 1200,
+        height: 630,
+        alt: "Contact Webb3Fitty - Software Engineering",
+      },
+    ],
+  },
+
+  // Twitter Card metadata
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact | Webb3Fitty - Software Engineering',
+    description: 'Get in touch for your next web development project. Web3 and AI development solutions.',
+    creator: "@webb3fitty",
+    site: "@webb3fitty",
+    images: [
+      {
+        url: "https://webb3fitty.dev/webb3fitty.png",
+        alt: "Contact Webb3Fitty - Software Engineering",
+      }
+    ],
+  },
+
+  // Additional metadata
+  alternates: {
+    canonical: "https://webb3fitty.dev/contact",
+  },
+  
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
     },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Contact Webb3Fitty - Software Engineering',
-        description: 'Get in touch for your next web development project.',
-    },
+  },
+
+  // Contact specific metadata
+  other: {
+    'contact:author': 'Webb3Fitty',
+    'contact:services': 'Web3,AI,React,Next.js,Development',
+    'contact:pricing': 'hourly,project-based',
+    'content:type': 'contact',
+  },
 };
 const ContactPage = () => {
     return (
@@ -92,7 +149,7 @@ const ContactPage = () => {
                 {/* Additional Info */}
                 <div className="mt-12 text-center">
                     <p className="max-w-2xl mx-auto text-gray-400">
-                        Ready to bring your ideas to life? Let's discuss your project and create something amazing together. 
+                        Ready to bring your ideas to life? Let`&apos;`s discuss your project and create something amazing together. 
                         Choose your preferred contact method above to get started.
                     </p>
                 </div>
