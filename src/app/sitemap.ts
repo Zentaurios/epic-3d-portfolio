@@ -73,15 +73,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ]
 
   // Dynamic blog pages
-  const blogPages: MetadataRoute.Sitemap = blogSlugs.map((post: any) => ({
+  const blogPages: MetadataRoute.Sitemap = blogSlugs.map((post: { slug: string; _updatedAt?: string; publishedAt: string }) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: new Date(post._updatedAt || post.publishedAt),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   }))
 
-  // Dynamic project pages
-  const projectPages: MetadataRoute.Sitemap = projectSlugs.map((project: any) => ({
+  // Dynamic project pages  
+  const projectPages: MetadataRoute.Sitemap = projectSlugs.map((project: { slug: string; _updatedAt?: string; completedAt: string }) => ({
     url: `${baseUrl}/explore/${project.slug}`,
     lastModified: new Date(project._updatedAt || project.completedAt),
     changeFrequency: 'monthly' as const,
