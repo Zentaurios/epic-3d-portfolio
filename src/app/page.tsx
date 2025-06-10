@@ -4,6 +4,79 @@ import { BlogPost, Project } from '@/types'
 import ServerContent from '@/components/layout/ServerContent'
 import ClientEnhancement from '@/components/3d/ClientEnhancement'
 
+// Generate metadata for SEO and social sharing
+export const metadata: Metadata = {
+  title: "Webb3Fitty - Revolutionary Web3 & AI Developer Portfolio",
+  description: "Experience the future of web development in an immersive 3D brain universe. Explore cutting-edge Web3 innovations, AI applications, and revolutionary development projects by Webb3Fitty.",
+  keywords: ["webb3fitty", "web3", "ai", "developer", "portfolio", "blockchain", "nextjs", "react", "three.js", "3d portfolio", "immersive", "brain universe"],
+  authors: [{ name: "Webb3Fitty" }],
+  creator: "Webb3Fitty",
+  publisher: "Webb3Fitty",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  
+  // OpenGraph metadata
+  openGraph: {
+    title: "Webb3Fitty - Revolutionary Web3 & AI Developer Portfolio",
+    description: "Experience the future of web development in an immersive 3D brain universe. Explore cutting-edge Web3 innovations and AI applications.",
+    type: "website",
+    locale: "en_US",
+    url: "https://webb3fitty.dev",
+    siteName: "Webb3Fitty",
+    images: [
+      {
+        url: "https://webb3fitty.dev/webb3fitty.png",
+        width: 1200,
+        height: 630,
+        alt: "Webb3Fitty - Revolutionary Web3 & AI Developer Portfolio",
+      },
+    ],
+  },
+
+  // Twitter Card metadata
+  twitter: {
+    card: "summary_large_image",
+    title: "Webb3Fitty - Revolutionary Web3 & AI Developer Portfolio",
+    description: "Experience the future of web development in an immersive 3D brain universe. Explore cutting-edge Web3 innovations and AI applications.",
+    creator: "@webb3fitty",
+    site: "@webb3fitty",
+    images: [
+      {
+        url: "https://webb3fitty.dev/webb3fitty.png",
+        alt: "Webb3Fitty - Revolutionary Web3 & AI Developer Portfolio",
+      }
+    ],
+  },
+
+  // Additional metadata
+  alternates: {
+    canonical: "https://webb3fitty.dev",
+  },
+  
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  // Homepage specific metadata
+  other: {
+    'portfolio:author': 'Webb3Fitty',
+    'portfolio:type': 'Web3 & AI Developer',
+    'portfolio:specialties': 'Web3,AI,Blockchain,React,Next.js,Ethers.js',
+    'portfolio:interactive': 'true',
+  },
+}
+
 // Server-side data fetching
 async function getHomePageData() {
   try {
@@ -141,42 +214,6 @@ async function getHomePageData() {
       ]
     }
   }
-}
-
-// SEO metadata - fully server-side rendered
-export const metadata: Metadata = {
-  title: 'Webb3Fitty - Epic 3D Portfolio | Full-Stack Developer & Digital Architect',
-  description: 'Explore the cosmic portfolio of Webb3Fitty - a passionate full-stack developer specializing in immersive web experiences, blockchain integration, and AI-powered solutions. Built with Next.js, Three.js, and cutting-edge technologies.',
-  keywords: 'Webb3Fitty, full-stack developer, 3D portfolio, Three.js, Next.js, Web3, blockchain, AI solutions, digital architect, immersive web experiences',
-  authors: [{ name: 'Webb3Fitty' }],
-  creator: 'Webb3Fitty',
-  publisher: 'Webb3Fitty',
-  openGraph: {
-    title: 'Webb3Fitty - Epic 3D Portfolio',
-    description: 'Navigate through an immersive galaxy of cutting-edge projects and innovative solutions.',
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'Webb3Fitty Portfolio',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Webb3Fitty - Epic 3D Portfolio',
-    description: 'Explore the cosmic portfolio of a passionate full-stack developer.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  alternates: {
-    canonical: 'https://webb3fitty.dev',
-  },
 }
 
 // Home page component

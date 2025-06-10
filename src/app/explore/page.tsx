@@ -8,17 +8,72 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Creative Nexus - Explore Projects | Webb3Fitty',
   description: 'Navigate through a constellation of innovative creations spanning Web3, AI, and immersive digital experiences. Each project represents synaptic leaps in technological evolution.',
-  keywords: ['portfolio', 'projects', 'web3', 'blockchain', 'ai', 'machine learning', '3d development', 'fintech', 'dapp development'],
+  keywords: ['webb3fitty', 'portfolio', 'projects', 'web3', 'blockchain', 'ai', 'machine learning', '3d development', 'fintech', 'dapp development', 'creative nexus'],
+  authors: [{ name: "Webb3Fitty" }],
+  creator: "Webb3Fitty",
+  publisher: "Webb3Fitty",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  
+  // OpenGraph metadata
   openGraph: {
-    title: 'Creative Nexus - Explore Projects',
+    title: 'Creative Nexus - Explore Projects | Webb3Fitty',
     description: 'Navigate through innovative projects spanning Web3, AI, and immersive digital experiences.',
     type: 'website',
-    url: '/explore',
+    locale: "en_US",
+    url: 'https://webb3fitty.dev/explore',
+    siteName: "Webb3Fitty",
+    images: [
+      {
+        url: "https://webb3fitty.dev/webb3fitty.png",
+        width: 1200,
+        height: 630,
+        alt: "Creative Nexus - Explore Projects | Webb3Fitty",
+      },
+    ],
   },
+
+  // Twitter Card metadata
   twitter: {
     card: 'summary_large_image',
-    title: 'Creative Nexus - Explore Projects',
+    title: 'Creative Nexus - Explore Projects | Webb3Fitty',
     description: 'Navigate through innovative projects spanning Web3, AI, and immersive digital experiences.',
+    creator: "@webb3fitty",
+    site: "@webb3fitty",
+    images: [
+      {
+        url: "https://webb3fitty.dev/webb3fitty.png",
+        alt: "Creative Nexus - Explore Projects | Webb3Fitty",
+      }
+    ],
+  },
+
+  // Additional metadata
+  alternates: {
+    canonical: "https://webb3fitty.dev/explore",
+  },
+  
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  // Projects specific metadata
+  other: {
+    'portfolio:author': 'Webb3Fitty',
+    'portfolio:section': 'projects',
+    'projects:categories': 'Web3,AI,Blockchain,Development',
+    'content:type': 'portfolio',
   },
 }
 
@@ -120,11 +175,11 @@ export default async function ExplorePage() {
               <div className="relative max-w-4xl p-8 mx-auto overflow-hidden border glass-dark border-cyan-500/20">
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5" />
                 <blockquote className="relative z-10 text-xl italic leading-relaxed text-gray-300 md:text-2xl">
-                  "Every line of code is a neural pathway to innovation. Every project 
+                  `&quot;`Every line of code is a neural pathway to innovation. Every project 
                   is a creative synapse firing across the digital consciousness, 
-                  reshaping what's possible in our interconnected reality."
+                  reshaping what`&apos;`s possible in our interconnected reality.`&quot;`
                 </blockquote>
-                <cite className="block mt-4 font-semibold text-cyan-400">- Webb3Fitty's Creative Core</cite>
+                <cite className="block mt-4 font-semibold text-cyan-400">- Webb3Fitty`&apos;`s Creative Core</cite>
                 {/* Thought patterns */}
                 <div className="absolute flex gap-1 bottom-4 right-4">
                   <div className="w-1 h-1 rounded-full bg-cyan-400 animate-ping" />
@@ -171,8 +226,8 @@ export default async function ExplorePage() {
                 Ready to Ignite Innovation?
               </h2>
               <p className="relative z-10 mb-12 text-xl leading-relaxed text-gray-300">
-                Let's synchronize our creative frequencies and build projects that transcend 
-                digital boundaries. Whether it's Web3 evolution, AI consciousness, or 
+                Let`&apos;`s synchronize our creative frequencies and build projects that transcend 
+                digital boundaries. Whether it`&apos;`s Web3 evolution, AI consciousness, or 
                 immersive reality experiences, together we can architect legendary solutions.
               </p>
               

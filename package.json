@@ -33,6 +33,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.8.1",
+    "sanity": "^3.91.0",
     "sharp": "^0.33.2",
     "styled-components": "^6.1.18",
     "tailwind-merge": "^2.2.1",
