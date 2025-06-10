@@ -17,6 +17,7 @@ export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {})
   const lastScrollYRef = useRef(0)
   const lastDirectionRef = useRef<'up' | 'down'>('down')
   const lastProgressRef = useRef(0)
+  const isScrollingRef = useRef(false)
   
   // Update ref when callback changes
   useEffect(() => {
@@ -25,40 +26,19 @@ export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {})
   
   useEffect(() => {
     let scrollTimeoutId: NodeJS.Timeout
-    let targetProgress = 0
     
     const updateScrollProgress = () => {
-      // Use Lenis scroll value if available, fallback to native scroll
-      const lenis = (window as { lenis?: { 
-        scroll: number; 
-        on: (event: string, callback: () => void) => void; 
-        off: (event: string, callback: () => void) => void 
-      } }).lenis
-      
-      // Always use native scroll for mobile devices or when Lenis is not available
-      const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(navigator.userAgent.toLowerCase()) ||
-                      ('ontouchstart' in window && window.innerWidth <= 768)
-      
-      const scrollY = (lenis && !isMobile) ? lenis.scroll : window.scrollY
-      
-      // Get proper document height
-      const documentHeight = Math.max(
-        document.body.scrollHeight,
-        document.body.offsetHeight,
-        document.documentElement.clientHeight,
-        document.documentElement.scrollHeight,
-        document.documentElement.offsetHeight
-      )
-      
+      const scrollY = window.scrollY
+      const documentHeight = document.documentElement.scrollHeight
       const windowHeight = window.innerHeight
       const maxScroll = documentHeight - windowHeight
       
       // Calculate normalized scroll progress (0 to 1)
-      targetProgress = maxScroll > 0 ? Math.min(Math.max(scrollY / maxScroll, 0), 1) : 0
+      const progress = maxScroll > 0 ? Math.min(Math.max(scrollY / maxScroll, 0), 1) : 0
       
-      // Determine scroll direction with tolerance and only update if changed
+      // Determine scroll direction
       const scrollDiff = scrollY - lastScrollYRef.current
-      if (Math.abs(scrollDiff) > 2) { // Increased tolerance to prevent excessive updates
+      if (Math.abs(scrollDiff) > 2) {
         const newDirection = scrollDiff > 0 ? 'down' : 'up'
         if (newDirection !== lastDirectionRef.current) {
           setScrollDirection(newDirection)
@@ -67,13 +47,17 @@ export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {})
         lastScrollYRef.current = scrollY
       }
       
-      setIsScrolling(true)
+      // Only update isScrolling state if it has changed
+      if (!isScrollingRef.current) {
+        setIsScrolling(true)
+        isScrollingRef.current = true
+      }
       
       // Only update progress if it has changed significantly
-      if (Math.abs(targetProgress - lastProgressRef.current) > 0.001) {
-        setScrollProgress(targetProgress)
-        lastProgressRef.current = targetProgress
-        onProgressRef.current?.(targetProgress)
+      if (Math.abs(progress - lastProgressRef.current) > 0.001) {
+        setScrollProgress(progress)
+        lastProgressRef.current = progress
+        onProgressRef.current?.(progress)
       }
       
       // Clear existing timeout
@@ -82,40 +66,21 @@ export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {})
       // Set timeout to detect when scrolling stops
       scrollTimeoutId = setTimeout(() => {
         setIsScrolling(false)
+        isScrollingRef.current = false
       }, 150)
     }
     
-    // Listen to both Lenis and native scroll events
-    const lenis = (window as { lenis?: { 
-      scroll: number; 
-      on: (event: string, callback: () => void) => void; 
-      off: (event: string, callback: () => void) => void 
-    } }).lenis
-    
-    // Check if we're on mobile
-    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(navigator.userAgent.toLowerCase()) ||
-                    ('ontouchstart' in window && window.innerWidth <= 768)
-    
-    if (lenis && !isMobile) {
-      // Use Lenis scroll events for smooth scrolling on desktop
-      lenis.on('scroll', updateScrollProgress)
-    } else {
-      // Use native scroll events for mobile or when Lenis is not available
-      window.addEventListener('scroll', updateScrollProgress, { passive: true })
-    }
+    // Use native scroll events for maximum compatibility
+    window.addEventListener('scroll', updateScrollProgress, { passive: true })
     
     // Initial calculation
     updateScrollProgress()
     
     return () => {
-      if (lenis && !isMobile) {
-        lenis.off('scroll', updateScrollProgress)
-      } else {
-        window.removeEventListener('scroll', updateScrollProgress)
-      }
+      window.removeEventListener('scroll', updateScrollProgress)
       clearTimeout(scrollTimeoutId)
     }
-  }, []) // Empty dependency array - everything is handled via refs or is stable
+  }, [])
   
   return {
     scrollProgress,

@@ -7,7 +7,6 @@ import { LayeredBrainSystem } from "@/components/3d/LayeredBrainSystem";
 import { BrainNavigationDemo } from "@/components/layout/BrainNavigationDemo";
 import { SectionNavigation } from "@/components/layout/SectionNavigation";
 import { AIAgentProvider, AIAgentButton, AIAgentChat } from "@/components/ai-agent";
-import { MobileScrollTest } from "@/components/debug/MobileScrollTest";
 import "./globals.css";
 
 const inter = Inter({
@@ -95,8 +94,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5, // Allow zoom for accessibility
+  userScalable: true, // Allow user scaling for accessibility
   themeColor: "#8B5CF6",
 };
 
@@ -203,9 +202,6 @@ export default function RootLayout({
               {/* AI Agent Interface */}
               <AIAgentButton />
               <AIAgentChat />
-              
-              {/* Mobile Scroll Debug (development only) */}
-              <MobileScrollTest />
             
             </SmoothScrollProvider>
           </AIAgentProvider>

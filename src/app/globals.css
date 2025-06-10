@@ -39,64 +39,19 @@ html {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
-  scroll-behavior: auto !important; /* Let Lenis handle smooth scrolling */
-  /* Ensure proper height calculation for Lenis */
+  /* SmoothScrollProvider will handle scroll-behavior dynamically */
   min-height: 100vh;
-  /* Prevent scroll issues */
-  overscroll-behavior: none;
-  /* Hide native scrollbars when Lenis is active on desktop */
-  overflow-y: hidden;
+  /* Prevent horizontal overscroll */
+  overscroll-behavior-x: none;
 }
 
-/* Enable native scrolling on mobile devices */
-@media (hover: none) and (pointer: coarse) {
-  html {
-    overflow-y: auto !important;
-    scroll-behavior: smooth !important;
-  }
-  
-  body {
-    overflow-y: auto !important;
-  }
+/* Ensure touch events work properly */
+* {
+  touch-action: manipulation;
 }
 
-/* Enable native scrolling for touch devices */
-@media (max-width: 768px) {
-  html {
-    overflow-y: auto !important;
-    scroll-behavior: smooth !important;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  body {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-}
-
-/* Additional iOS specific scrolling fixes */
-@supports (-webkit-touch-callout: none) {
-  html {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  body {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    position: relative;
-  }
-}
-
-/* Ensure touch events work properly on mobile */
-@media (hover: none) and (pointer: coarse) {
-  * {
-    touch-action: manipulation;
-  }
-  
-  html, body {
-    touch-action: pan-y pinch-zoom;
-  }
+html, body {
+  touch-action: pan-y pinch-zoom;
 }
 
 body {
@@ -106,17 +61,13 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  /* Hide native scrollbars - Lenis handles scrolling on desktop */
-  overflow-y: hidden;
-  /* Ensure body can expand to full content height */
+  /* SmoothScrollProvider will handle overflow-y dynamically */
   min-height: 100vh;
-  /* Prevent height calculation issues */
   position: relative;
   line-height: 1.6;
   width: 100%;
-  touch-action: auto;
-  /* Prevent overscroll bounce */
-  overscroll-behavior: none;
+  /* Prevent horizontal overscroll bounce */
+  overscroll-behavior-x: none;
   /* Ensure content can be properly measured */
   display: flex;
   flex-direction: column;
@@ -137,23 +88,43 @@ main {
    SCROLLBAR STYLES
    ============================================= */
 
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* Desktop scrollbar - only show when Lenis is not hiding overflow */
+@media (hover: hover) and (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.8);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, var(--modern-slate), var(--modern-secondary));
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, var(--modern-secondary), var(--modern-accent));
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.8);
-}
+/* Mobile scrollbar - thinner and more subtle */
+@media (hover: none) and (pointer: coarse) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, var(--modern-slate), var(--modern-secondary));
-  border-radius: 4px;
-  transition: background 0.3s ease;
-}
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, var(--modern-secondary), var(--modern-accent));
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
 }
 
 /* =============================================

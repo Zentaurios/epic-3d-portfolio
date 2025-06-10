@@ -114,10 +114,11 @@ export const SCROLL_CONFIG = {
 
 // Type definition for the global lenis instance we use
 interface GlobalLenis {
-  scrollTo: (target: number | string, options?: { 
+  scrollTo: (target: number | string | HTMLElement, options?: { 
     immediate?: boolean
     duration?: number
     easing?: (t: number) => number
+    offset?: number
   }) => void
   resize: () => void
   scroll: number
@@ -129,8 +130,66 @@ const getLenis = (): GlobalLenis | null => {
   return (window as Window & { lenis?: GlobalLenis }).lenis || null
 }
 
-// Scroll utility functions for Lenis
+// Universal scroll utilities that work with both Lenis (desktop) and native (mobile)
 export const scrollUtils = {
+  // Universal scroll to any target - works on both mobile and desktop
+  scrollTo: (target: string | HTMLElement | number, options?: {
+    offset?: number
+    duration?: number
+    immediate?: boolean
+  }) => {
+    const { offset = 0, duration = 1.2, immediate = false } = options || {}
+    const lenis = getLenis()
+
+    if (lenis && typeof lenis.scrollTo === 'function') {
+      // Use Lenis for desktop smooth scrolling
+      lenis.scrollTo(target, {
+        offset: -offset,
+        duration: immediate ? 0 : duration,
+        immediate
+      })
+    } else {
+      // Use native scrolling for mobile or fallback
+      let targetElement: HTMLElement | null = null
+      let scrollPosition = 0
+
+      if (typeof target === 'string') {
+        // Handle anchor links (#id) or query selectors
+        targetElement = target.startsWith('#') 
+          ? document.getElementById(target.slice(1))
+          : document.querySelector(target)
+      } else if (target instanceof HTMLElement) {
+        targetElement = target
+      } else if (typeof target === 'number') {
+        scrollPosition = target
+      }
+
+      if (targetElement) {
+        const rect = targetElement.getBoundingClientRect()
+        scrollPosition = window.scrollY + rect.top - offset
+      }
+
+      // Use native smooth scrolling
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: immediate ? 'auto' : 'smooth'
+      })
+    }
+  },
+
+  // Scroll to top - universal
+  scrollToTop: (immediate = false) => {
+    const lenis = getLenis()
+    if (lenis) {
+      lenis.scrollTo(0, { immediate })
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: immediate ? 'auto' : 'smooth'
+      })
+    }
+  },
+
   // Force Lenis to recalculate scroll height
   refreshLenisHeight: () => {
     const lenis = getLenis()
@@ -143,8 +202,8 @@ export const scrollUtils = {
     }
   },
 
-  // Scroll to bottom with proper height calculation
-  scrollToBottom: (smooth = true) => {
+  // Scroll to bottom with proper height calculation - works on both mobile and desktop
+  scrollToBottom: (immediate = false) => {
     const lenis = getLenis()
     if (lenis) {
       // First refresh height
@@ -155,20 +214,18 @@ export const scrollUtils = {
         const viewportHeight = window.innerHeight
         const maxScroll = actualHeight - viewportHeight
         
-        if (smooth) {
-          lenis.scrollTo(maxScroll, { 
-            duration: 1.5,
-            easing: (t: number) => 1 - Math.pow(1 - t, 3)
-          })
-        } else {
-          lenis.scrollTo(maxScroll, { immediate: true })
-        }
+        lenis.scrollTo(maxScroll, { 
+          immediate,
+          duration: immediate ? 0 : 1.5,
+          easing: (t: number) => 1 - Math.pow(1 - t, 3)
+        })
       }, 100)
     } else {
-      // Fallback to native scroll
+      // Fallback to native scroll (mobile)
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
       window.scrollTo({
-        top: document.documentElement.scrollHeight,
-        behavior: smooth ? 'smooth' : 'instant'
+        top: maxScroll,
+        behavior: immediate ? 'auto' : 'smooth'
       })
     }
   },
@@ -181,7 +238,7 @@ export const scrollUtils = {
       return scroll < limit - 10 // 10px tolerance
     }
     
-    // Fallback check
+    // Fallback check for native scroll
     return window.scrollY < document.documentElement.scrollHeight - window.innerHeight - 10
   },
 
@@ -193,8 +250,20 @@ export const scrollUtils = {
       return limit > 0 ? Math.min(scroll / limit, 1) : 0
     }
     
-    // Fallback calculation
+    // Fallback calculation for native scroll
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight
     return maxScroll > 0 ? Math.min(window.scrollY / maxScroll, 1) : 0
+  },
+
+  // React hook for components
+  useScrollUtils: () => {
+    return {
+      scrollTo: scrollUtils.scrollTo,
+      scrollToTop: scrollUtils.scrollToTop,
+      scrollToBottom: scrollUtils.scrollToBottom,
+      refreshHeight: scrollUtils.refreshLenisHeight,
+      canScrollDown: scrollUtils.canScrollDown,
+      getProgress: scrollUtils.getScrollProgress,
+    }
   }
 }

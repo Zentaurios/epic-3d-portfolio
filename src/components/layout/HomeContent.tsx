@@ -47,8 +47,56 @@ export function HomeContent({ content }: HomeContentProps) {
           <section 
             id="hero" 
             data-section="hero"
-            className="flex items-center justify-center min-h-screen py-16 brain-region-consciousness"
+            className="flex items-center justify-center min-h-screen py-16 brain-region-consciousness relative overflow-hidden"
           >
+            {/* Hero Neural Effects - Purple/Consciousness theme */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute inset-0 bg-gradient-to-b from-purple-900/10 via-transparent to-purple-900/5" />
+              <svg className="absolute inset-0 w-full h-full opacity-15">
+                <defs>
+                  <pattern id="heroNeuralGrid" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+                    <circle cx="40" cy="40" r="1.5" fill="#8b5cf6" opacity="0.3">
+                      <animate attributeName="opacity" values="0.1;0.6;0.1" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                  </pattern>
+                  <linearGradient id="heroNeuralGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.2" />
+                    <stop offset="50%" stopColor="#a855f7" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#7c3aed" stopOpacity="0.1" />
+                  </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#heroNeuralGrid)" />
+                <path d="M0,40 Q200,20 400,40 T800,40" stroke="url(#heroNeuralGlow)" strokeWidth="1" fill="none" opacity="0.4">
+                  <animate attributeName="opacity" values="0.2;0.6;0.2" dur="6s" repeatCount="indefinite" />
+                </path>
+                <path d="M150,80 Q350,60 550,80 T950,80" stroke="url(#heroNeuralGlow)" strokeWidth="0.8" fill="none" opacity="0.3">
+                  <animate attributeName="opacity" values="0.1;0.5;0.1" dur="8s" repeatCount="indefinite" />
+                </path>
+              </svg>
+            </div>
+
+            {/* Floating consciousness particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[
+                { left: 15, top: 20, delay: 0.7, duration: 4.2 },
+                { left: 85, top: 30, delay: 1.8, duration: 3.6 },
+                { left: 45, top: 70, delay: 1.1, duration: 4.8 },
+                { left: 25, top: 85, delay: 2.3, duration: 3.2 },
+                { left: 75, top: 15, delay: 0.4, duration: 5.1 }
+              ].map((particle, i) => (
+                <div
+                  key={i}
+                  className="absolute w-1.5 h-1.5 rounded-full bg-purple-400 opacity-40 animate-pulse"
+                  style={{
+                    left: `${particle.left}%`,
+                    top: `${particle.top}%`,
+                    animationDelay: `${particle.delay}s`,
+                    animationDuration: `${particle.duration}s`
+                  }}
+                />
+              ))}
+            </div>
+
             <div className="relative z-10">
               <HeroSection 
                 onExplore={() => navigateToSection('explore')}
@@ -60,8 +108,56 @@ export function HomeContent({ content }: HomeContentProps) {
           <section 
             id="explore" 
             data-section="explore"
-            className="flex items-center min-h-screen py-16 brain-region-creativity"
+            className="flex items-center min-h-screen py-16 brain-region-creativity relative overflow-hidden"
           >
+            {/* Creativity Neural Effects - Orange/Amber theme */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute inset-0 bg-gradient-to-b from-orange-900/10 via-transparent to-amber-900/5" />
+              <svg className="absolute inset-0 w-full h-full opacity-15">
+                <defs>
+                  <pattern id="exploreNeuralGrid" x="0" y="0" width="75" height="75" patternUnits="userSpaceOnUse">
+                    <circle cx="37.5" cy="37.5" r="1.5" fill="#f59e0b" opacity="0.4">
+                      <animate attributeName="opacity" values="0.2;0.7;0.2" dur="3.5s" repeatCount="indefinite" />
+                    </circle>
+                  </pattern>
+                  <linearGradient id="exploreNeuralGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.2" />
+                    <stop offset="50%" stopColor="#fb923c" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#ea580c" stopOpacity="0.1" />
+                  </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#exploreNeuralGrid)" />
+                <path d="M0,35 Q180,15 360,35 T720,35" stroke="url(#exploreNeuralGlow)" strokeWidth="1.2" fill="none" opacity="0.5">
+                  <animate attributeName="opacity" values="0.3;0.7;0.3" dur="5s" repeatCount="indefinite" />
+                </path>
+                <path d="M120,70 Q300,50 480,70 T840,70" stroke="url(#exploreNeuralGlow)" strokeWidth="1" fill="none" opacity="0.4">
+                  <animate attributeName="opacity" values="0.2;0.6;0.2" dur="7s" repeatCount="indefinite" />
+                </path>
+              </svg>
+            </div>
+
+            {/* Floating creativity particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[
+                { left: 20, top: 25, delay: 0.5, duration: 3.8 },
+                { left: 80, top: 15, delay: 1.2, duration: 4.1 },
+                { left: 35, top: 75, delay: 0.9, duration: 3.5 },
+                { left: 70, top: 60, delay: 1.7, duration: 4.3 },
+                { left: 10, top: 50, delay: 0.3, duration: 3.9 }
+              ].map((particle, i) => (
+                <div
+                  key={i}
+                  className="absolute w-1.5 h-1.5 rounded-full bg-orange-400 opacity-50 animate-pulse"
+                  style={{
+                    left: `${particle.left}%`,
+                    top: `${particle.top}%`,
+                    animationDelay: `${particle.delay}s`,
+                    animationDuration: `${particle.duration}s`
+                  }}
+                />
+              ))}
+            </div>
+
             <div className="relative z-10">
               <ExploreSection 
                 onNavigate={navigateToSection}
@@ -75,8 +171,56 @@ export function HomeContent({ content }: HomeContentProps) {
           <section 
             id="blog" 
             data-section="blog"
-            className="flex items-center min-h-screen py-16 brain-region-memory"
+            className="flex items-center min-h-screen py-16 brain-region-memory relative overflow-hidden"
           >
+            {/* Memory Neural Effects - Blue/Cyan theme */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-900/10 via-transparent to-cyan-900/5" />
+              <svg className="absolute inset-0 w-full h-full opacity-15">
+                <defs>
+                  <pattern id="blogNeuralGrid" x="0" y="0" width="70" height="70" patternUnits="userSpaceOnUse">
+                    <circle cx="35" cy="35" r="1.5" fill="#06b6d4" opacity="0.4">
+                      <animate attributeName="opacity" values="0.1;0.8;0.1" dur="4.5s" repeatCount="indefinite" />
+                    </circle>
+                  </pattern>
+                  <linearGradient id="blogNeuralGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.2" />
+                    <stop offset="50%" stopColor="#0891b2" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#0e7490" stopOpacity="0.1" />
+                  </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#blogNeuralGrid)" />
+                <path d="M0,45 Q190,25 380,45 T760,45" stroke="url(#blogNeuralGlow)" strokeWidth="1.1" fill="none" opacity="0.5">
+                  <animate attributeName="opacity" values="0.2;0.7;0.2" dur="5.5s" repeatCount="indefinite" />
+                </path>
+                <path d="M100,75 Q280,55 460,75 T820,75" stroke="url(#blogNeuralGlow)" strokeWidth="0.9" fill="none" opacity="0.4">
+                  <animate attributeName="opacity" values="0.1;0.6;0.1" dur="6.5s" repeatCount="indefinite" />
+                </path>
+              </svg>
+            </div>
+
+            {/* Floating memory particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[
+                { left: 18, top: 22, delay: 0.6, duration: 4.0 },
+                { left: 82, top: 18, delay: 1.4, duration: 3.7 },
+                { left: 40, top: 78, delay: 1.0, duration: 4.2 },
+                { left: 65, top: 55, delay: 1.9, duration: 3.8 },
+                { left: 12, top: 65, delay: 0.2, duration: 4.5 }
+              ].map((particle, i) => (
+                <div
+                  key={i}
+                  className="absolute w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-45 animate-pulse"
+                  style={{
+                    left: `${particle.left}%`,
+                    top: `${particle.top}%`,
+                    animationDelay: `${particle.delay}s`,
+                    animationDuration: `${particle.duration}s`
+                  }}
+                />
+              ))}
+            </div>
+
             <div className="relative z-10">
               <Suspense fallback={<BlogsSkeleton />}>
                 <LatestBlogs 
@@ -94,8 +238,56 @@ export function HomeContent({ content }: HomeContentProps) {
           <section 
             id="about" 
             data-section="about"
-            className="flex items-center min-h-screen py-16 brain-region-logic mb-[75vh]"
+            className="flex items-center min-h-screen py-16 brain-region-logic mb-[75vh] relative overflow-hidden"
           >
+            {/* Logic Neural Effects - Green/Emerald theme */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute inset-0 bg-gradient-to-b from-green-900/10 via-transparent to-emerald-900/5" />
+              <svg className="absolute inset-0 w-full h-full opacity-15">
+                <defs>
+                  <pattern id="aboutNeuralGrid" x="0" y="0" width="65" height="65" patternUnits="userSpaceOnUse">
+                    <circle cx="32.5" cy="32.5" r="1.5" fill="#10b981" opacity="0.4">
+                      <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3.8s" repeatCount="indefinite" />
+                    </circle>
+                  </pattern>
+                  <linearGradient id="aboutNeuralGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.2" />
+                    <stop offset="50%" stopColor="#34d399" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#059669" stopOpacity="0.1" />
+                  </linearGradient>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#aboutNeuralGrid)" />
+                <path d="M0,50 Q200,30 400,50 T800,50" stroke="url(#aboutNeuralGlow)" strokeWidth="1" fill="none" opacity="0.5">
+                  <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4.5s" repeatCount="indefinite" />
+                </path>
+                <path d="M140,85 Q320,65 500,85 T860,85" stroke="url(#aboutNeuralGlow)" strokeWidth="0.8" fill="none" opacity="0.4">
+                  <animate attributeName="opacity" values="0.2;0.7;0.2" dur="6s" repeatCount="indefinite" />
+                </path>
+              </svg>
+            </div>
+
+            {/* Floating logic particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[
+                { left: 22, top: 20, delay: 0.4, duration: 4.1 },
+                { left: 78, top: 30, delay: 1.5, duration: 3.4 },
+                { left: 45, top: 80, delay: 0.8, duration: 4.7 },
+                { left: 15, top: 65, delay: 2.1, duration: 3.1 },
+                { left: 85, top: 45, delay: 0.6, duration: 4.9 }
+              ].map((particle, i) => (
+                <div
+                  key={i}
+                  className="absolute w-1.5 h-1.5 rounded-full bg-green-400 opacity-50 animate-pulse"
+                  style={{
+                    left: `${particle.left}%`,
+                    top: `${particle.top}%`,
+                    animationDelay: `${particle.delay}s`,
+                    animationDuration: `${particle.duration}s`
+                  }}
+                />
+              ))}
+            </div>
+
             <div className="relative z-10">
               <AboutSection 
                 content={content.about} 
