@@ -13,10 +13,22 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
   const [isInitialized, setIsInitialized] = useState(false)
 
   useEffect(() => {
-    // Prevent conflicts by disabling CSS smooth scrolling
+    // Detect mobile devices
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                     window.innerWidth <= 768 ||
+                     'ontouchstart' in window
+
+    // On mobile, skip Lenis and use native scrolling
+    if (isMobile) {
+      console.log('Mobile device detected - using native scrolling')
+      setIsInitialized(true)
+      return
+    }
+
+    // Prevent conflicts by disabling CSS smooth scrolling on desktop
     document.documentElement.style.scrollBehavior = 'auto'
     
-    // Initialize Lenis with optimized settings for brain universe
+    // Initialize Lenis with optimized settings for brain universe (desktop only)
     lenisRef.current = new Lenis({
       duration: 1.0, // Responsive feel
       easing: (t) => 1 - Math.pow(1 - t, 3), // easeOutCubic
@@ -42,6 +54,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
     rafRef.current = requestAnimationFrame(raf)
 
     // Expose Lenis instance globally for navigation
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(window as any).lenis = lenisRef.current
 
     const handleScroll = () => {
@@ -61,6 +74,7 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
       }
       // Restore CSS scroll behavior
       document.documentElement.style.scrollBehavior = ''
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       delete (window as any).lenis
     }
   }, [])

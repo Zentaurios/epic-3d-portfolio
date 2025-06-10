@@ -39,6 +39,7 @@ html {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  overflow-y: auto; /* Enable scrolling */
   scroll-behavior: auto !important; /* Let Lenis handle smooth scrolling */
 }
 
@@ -49,6 +50,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  overflow-y: auto; /* Enable scrolling */
   line-height: 1.6;
   width: 100%;
   min-height: 100vh;
@@ -57,7 +59,8 @@ body {
 }
 
 main {
-  min-height: 400vh;
+  min-height: 100vh; /* Let content determine height naturally */
+  height: auto; /* Allow content to expand */
   position: relative;
   z-index: 10;
 }
