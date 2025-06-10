@@ -34,7 +34,12 @@ export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {})
         on: (event: string, callback: () => void) => void; 
         off: (event: string, callback: () => void) => void 
       } }).lenis
-      const scrollY = lenis ? lenis.scroll : window.scrollY
+      
+      // Always use native scroll for mobile devices or when Lenis is not available
+      const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(navigator.userAgent.toLowerCase()) ||
+                      ('ontouchstart' in window && window.innerWidth <= 768)
+      
+      const scrollY = (lenis && !isMobile) ? lenis.scroll : window.scrollY
       
       // Get proper document height
       const documentHeight = Math.max(
@@ -87,11 +92,15 @@ export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {})
       off: (event: string, callback: () => void) => void 
     } }).lenis
     
-    if (lenis) {
-      // Use Lenis scroll events for smooth scrolling
+    // Check if we're on mobile
+    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(navigator.userAgent.toLowerCase()) ||
+                    ('ontouchstart' in window && window.innerWidth <= 768)
+    
+    if (lenis && !isMobile) {
+      // Use Lenis scroll events for smooth scrolling on desktop
       lenis.on('scroll', updateScrollProgress)
     } else {
-      // Fallback to native scroll events
+      // Use native scroll events for mobile or when Lenis is not available
       window.addEventListener('scroll', updateScrollProgress, { passive: true })
     }
     
@@ -99,7 +108,7 @@ export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {})
     updateScrollProgress()
     
     return () => {
-      if (lenis) {
+      if (lenis && !isMobile) {
         lenis.off('scroll', updateScrollProgress)
       } else {
         window.removeEventListener('scroll', updateScrollProgress)

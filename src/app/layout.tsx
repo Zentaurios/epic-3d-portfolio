@@ -7,6 +7,7 @@ import { LayeredBrainSystem } from "@/components/3d/LayeredBrainSystem";
 import { BrainNavigationDemo } from "@/components/layout/BrainNavigationDemo";
 import { SectionNavigation } from "@/components/layout/SectionNavigation";
 import { AIAgentProvider, AIAgentButton, AIAgentChat } from "@/components/ai-agent";
+import { MobileScrollTest } from "@/components/debug/MobileScrollTest";
 import "./globals.css";
 
 const inter = Inter({
@@ -202,6 +203,9 @@ export default function RootLayout({
               {/* AI Agent Interface */}
               <AIAgentButton />
               <AIAgentChat />
+              
+              {/* Mobile Scroll Debug (development only) */}
+              <MobileScrollTest />
             
             </SmoothScrollProvider>
           </AIAgentProvider>

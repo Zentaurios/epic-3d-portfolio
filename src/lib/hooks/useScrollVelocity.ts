@@ -18,6 +18,10 @@ export function useScrollVelocity(): ScrollVelocityHook {
   useEffect(() => {
     let animationFrame: number
     
+    // Detect if we're on mobile
+    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(navigator.userAgent.toLowerCase()) ||
+                    ('ontouchstart' in window && window.innerWidth <= 768)
+    
     const updateScrollMetrics = () => {
       const currentTime = performance.now()
       const currentScrollY = window.scrollY
@@ -38,14 +42,16 @@ export function useScrollVelocity(): ScrollVelocityHook {
           
           // Smooth velocity using moving average
           velocityHistory.current.push(rawVelocity)
-          if (velocityHistory.current.length > 10) {
+          if (velocityHistory.current.length > (isMobile ? 5 : 10)) {
             velocityHistory.current.shift()
           }
           
           const smoothVelocity = velocityHistory.current.reduce((a, b) => a + b, 0) / velocityHistory.current.length
           
           // Normalize velocity (0 to 1, where 1 is very fast scrolling)
-          const normalizedVelocity = Math.min(smoothVelocity * 2, 1)
+          // Use different multiplier for mobile devices (they tend to have different scroll speeds)
+          const velocityMultiplier = isMobile ? 1.5 : 2
+          const normalizedVelocity = Math.min(smoothVelocity * velocityMultiplier, 1)
           setScrollVelocity(normalizedVelocity)
           
           // Determine scroll direction
@@ -63,9 +69,13 @@ export function useScrollVelocity(): ScrollVelocityHook {
       lastTimestamp.current = currentTime
       
       // Decay velocity when not scrolling
+      // Use faster decay on mobile for more responsive feedback
+      const decayTimeout = isMobile ? 30 : 50
+      const decayRate = isMobile ? 0.9 : 0.95
+      
       setTimeout(() => {
-        setScrollVelocity(prev => Math.max(prev * 0.95, 0))
-      }, 50)
+        setScrollVelocity(prev => Math.max(prev * decayRate, 0))
+      }, decayTimeout)
       
       animationFrame = requestAnimationFrame(updateScrollMetrics)
     }

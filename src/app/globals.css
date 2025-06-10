@@ -44,8 +44,59 @@ html {
   min-height: 100vh;
   /* Prevent scroll issues */
   overscroll-behavior: none;
-  /* Hide native scrollbars when Lenis is active */
+  /* Hide native scrollbars when Lenis is active on desktop */
   overflow-y: hidden;
+}
+
+/* Enable native scrolling on mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  html {
+    overflow-y: auto !important;
+    scroll-behavior: smooth !important;
+  }
+  
+  body {
+    overflow-y: auto !important;
+  }
+}
+
+/* Enable native scrolling for touch devices */
+@media (max-width: 768px) {
+  html {
+    overflow-y: auto !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  body {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Additional iOS specific scrolling fixes */
+@supports (-webkit-touch-callout: none) {
+  html {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  body {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+}
+
+/* Ensure touch events work properly on mobile */
+@media (hover: none) and (pointer: coarse) {
+  * {
+    touch-action: manipulation;
+  }
+  
+  html, body {
+    touch-action: pan-y pinch-zoom;
+  }
 }
 
 body {
@@ -55,7 +106,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  /* Hide native scrollbars - Lenis handles scrolling */
+  /* Hide native scrollbars - Lenis handles scrolling on desktop */
   overflow-y: hidden;
   /* Ensure body can expand to full content height */
   min-height: 100vh;
