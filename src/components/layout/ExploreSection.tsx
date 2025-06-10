@@ -7,9 +7,10 @@ import { Project } from '@/types'
 interface ExploreSectionProps {
   onNavigate: (section: string) => void
   projects?: Project[]
+  brainActivity?: number
 }
 
-export function ExploreSection({ onNavigate, projects = [] }: ExploreSectionProps) {
+export function ExploreSection({ onNavigate, projects = [], brainActivity = 0.5 }: ExploreSectionProps) {
   const [hoveredProject, setHoveredProject] = useState<number | null>(null)
 
   // Use real projects data, limit to first 4 for homepage display
@@ -85,6 +86,12 @@ export function ExploreSection({ onNavigate, projects = [] }: ExploreSectionProp
       <div className="content-wrapper max-w-7xl">
         {/* Section Header */}
         <div className="mb-16 text-center">
+          {/* Neural activity indicator */}
+          <div 
+            className="absolute inset-0 transition-opacity duration-1000 bg-gradient-to-r from-cyan-500/5 to-purple-500/5"
+            style={{ opacity: brainActivity * 0.3 }}
+          />
+          
           <h2 className="mb-6 text-4xl font-bold md:text-6xl heading-gradient">
             Explore My Universe
           </h2>
@@ -102,6 +109,10 @@ export function ExploreSection({ onNavigate, projects = [] }: ExploreSectionProp
               className={`glass-effect p-8 transition-all duration-300 cursor-pointer transform hover:scale-105 ${
                 hoveredProject === index ? 'border-cyan-500/50' : ''
               }`}
+              style={{
+                transform: `translateY(${Math.max(0, (1 - brainActivity) * 5)}px)`,
+                opacity: Math.max(0.8, brainActivity * 0.6 + 0.4)
+              }}
               onMouseEnter={() => setHoveredProject(index)}
               onMouseLeave={() => setHoveredProject(null)}
               onClick={() => {
@@ -199,6 +210,11 @@ export function ExploreSection({ onNavigate, projects = [] }: ExploreSectionProp
             <div
               key={category.name}
               className="p-6 text-center transition-all duration-300 transform cursor-pointer glass-effect hover:scale-105"
+              style={{
+                animationDelay: `${Object.keys(projectCategories).indexOf(category.name) * 100}ms`,
+                transform: `translateY(${Math.max(0, (1 - brainActivity) * 8)}px)`,
+                opacity: Math.max(0.7, brainActivity * 0.7 + 0.3)
+              }}
               onClick={() => onNavigate('explore')}
             >
               <div className="mb-4 text-4xl">{category.icon}</div>
@@ -216,6 +232,10 @@ export function ExploreSection({ onNavigate, projects = [] }: ExploreSectionProp
           <button
             onClick={() => onNavigate('explore')}
             className="relative px-8 py-4 text-lg font-semibold text-white transition-all duration-300 transform rounded-full shadow-lg group bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 hover:scale-105 hover:shadow-cyan-500/25"
+            style={{
+              transform: `translateY(${Math.max(0, (1 - brainActivity) * 3)}px)`,
+              opacity: Math.max(0.9, brainActivity * 0.4 + 0.6)
+            }}
           >
             <span className="flex items-center gap-2">
               <Sparkles className="w-5 h-5" />

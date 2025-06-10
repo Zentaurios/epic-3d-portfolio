@@ -41,8 +41,9 @@ function RotatingBrainGroup({
     if (groupRef.current) {
       const time = state.clock.elapsedTime
       
-      // Initial rotation to reorient the brain (Y axis becomes X axis)
-      const baseRotationZ = Math.PI / 2 // 90 degrees around Z axis
+      // Fixed brain orientation: 45 degrees with upward tilt
+      const baseRotationZ = Math.PI / 4  // 45 degrees around Z axis
+      const baseRotationX = -Math.PI / 6 // -30 degrees upward tilt
       
       // Continuous slow rotation around Y axis (horizontal spin)
       const rotationY = time * 0.05
@@ -51,7 +52,7 @@ function RotatingBrainGroup({
       const activityWobble = (brainActivity.neural + brainActivity.synaptic) * 0.02
       
       groupRef.current.rotation.set(
-        activityWobble, // Removed tilt - only keep activity wobble
+        baseRotationX + activityWobble, // Apply upward tilt + activity wobble
         rotationY,
         baseRotationZ
       )

@@ -66,6 +66,7 @@ export function HomeContent({ content }: HomeContentProps) {
               <ExploreSection 
                 onNavigate={navigateToSection}
                 projects={content.projects}
+                brainActivity={getSectionProgress('explore')}
               />
             </div>
           </section>
@@ -93,7 +94,7 @@ export function HomeContent({ content }: HomeContentProps) {
           <section 
             id="about" 
             data-section="about"
-            className="flex items-center min-h-screen py-16 brain-region-logic"
+            className="flex items-center min-h-screen py-16 brain-region-logic mb-[75vh]"
           >
             <div className="relative z-10">
               <AboutSection 

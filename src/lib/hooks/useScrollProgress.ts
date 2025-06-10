@@ -18,7 +18,10 @@ export function useScrollProgress({ onProgress }: UseScrollProgressOptions = {})
   const lastDirectionRef = useRef<'up' | 'down'>('down')
   const lastProgressRef = useRef(0)
   
-  onProgressRef.current = onProgress
+  // Update ref when callback changes
+  useEffect(() => {
+    onProgressRef.current = onProgress
+  }, [onProgress])
   
   useEffect(() => {
     let scrollTimeoutId: NodeJS.Timeout

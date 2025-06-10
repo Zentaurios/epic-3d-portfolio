@@ -54,7 +54,8 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
 
   // Create anatomically accurate brain hemisphere geometry
   const createBrainHemisphere = (isLeft: boolean) => {
-    const hemisphere = new THREE.SphereGeometry(12, config.detail, config.detail, 0, Math.PI)
+    // 100% enclosed sphere (full sphere)
+    const hemisphere = new THREE.SphereGeometry(12, config.detail, config.detail)
     const vertices = hemisphere.attributes.position.array as Float32Array
     
     // Transform into realistic brain shape with cortical folds
@@ -63,10 +64,16 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
       const y = vertices[i + 1]
       const z = vertices[i + 2]
       
+      // Transform sphere to ellipsoid for realistic brain shape
+      // x * 0.85 (compress width), y * 0.9 (compress height), z * 1.5 (more elongation away from cerebellum)
+      vertices[i] = x * 0.85     // Width compression
+      vertices[i + 1] = y * 0.9  // Height compression  
+      vertices[i + 2] = z * 1.7  // More depth elongation (away from cerebellum)
+      
       // Create major cortical folds (gyri and sulci)
-      const frontalFold = Math.sin(z * 0.3 + y * 0.4) * 0.8
-      const parietalFold = Math.cos(x * 0.4 + z * 0.3) * 0.6
-      const temporalFold = Math.sin(y * 0.5 + x * 0.2) * 0.7
+      const frontalFold = Math.sin(vertices[i + 2] * 0.3 + vertices[i + 1] * 0.4) * 0.8
+      const parietalFold = Math.cos(vertices[i] * 0.4 + vertices[i + 2] * 0.3) * 0.6
+      const temporalFold = Math.sin(vertices[i + 1] * 0.5 + vertices[i] * 0.2) * 0.7
       
       // Combine folds for realistic brain surface
       const corticalPattern = frontalFold + parietalFold + temporalFold
@@ -98,14 +105,14 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
     
     return {
       geometry: hemisphere,
-      position: [isLeft ? -7 : 7, 2, 2] as [number, number, number],
+      position: [isLeft ? -7 : 7, -2, 8] as [number, number, number], // Closer to cerebellum (Y: 2 -> -2) and further away (Z: 2 -> 8)
       color: isLeft ? '#4f46e5' : '#6366f1'
     }
   }
 
   // Create cerebellum with characteristic folded structure
   const createCerebellum = () => {
-    const cerebellum = new THREE.SphereGeometry(6, config.detail, config.detail)
+    const cerebellum = new THREE.SphereGeometry(4, config.detail, config.detail) // Smaller: 4 instead of 6
     const vertices = cerebellum.attributes.position.array as Float32Array
     
     // Create cerebellum's distinctive folia (fine folds)
@@ -128,7 +135,7 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
     
     return {
       geometry: cerebellum,
-      position: [0, -10, -8] as [number, number, number],
+      position: [0, -7, -8] as [number, number, number], // Moved closer: Y from -10 to -7
       color: '#8b5cf6'
     }
   }
@@ -152,11 +159,11 @@ const createAnatomicalBrain = (quality: 'low' | 'medium' | 'high' = 'medium') =>
 
   // Create nodes distributed across brain regions
   const brainRegions = [
-    { center: [-7, 4, 4], radius: 8, density: Math.floor(config.nodes * 0.3), type: 'cortex' },
-    { center: [7, 4, 4], radius: 8, density: Math.floor(config.nodes * 0.3), type: 'cortex' },
-    { center: [0, -10, -8], radius: 5, density: Math.floor(config.nodes * 0.2), type: 'cerebellum' },
+    { center: [-8.5, -2, 8], radius: 8, density: Math.floor(config.nodes * 0.3), type: 'cortex' }, // Updated to match hemisphere positions
+    { center: [8.5, -2, 8], radius: 8, density: Math.floor(config.nodes * 0.3), type: 'cortex' }, // Updated to match hemisphere positions
+    { center: [0, -7, -8], radius: 4, density: Math.floor(config.nodes * 0.2), type: 'cerebellum' }, // Moved closer: Y from -10 to -7
     { center: [0, -6, -3], radius: 3, density: Math.floor(config.nodes * 0.1), type: 'stem' },
-    { center: [0, 2, 0], radius: 10, density: Math.floor(config.nodes * 0.1), type: 'corpus' }
+    { center: [0, -4, 0], radius: 8, density: Math.floor(config.nodes * 0.1), type: 'corpus' } // Adjusted Y position
   ]
 
   brainRegions.forEach((region, regionIndex) => {
@@ -278,7 +285,7 @@ function AnatomicalMesh({
         color={color}
         shininess={15}
         transparent
-        opacity={0.85}
+        opacity={0.65}
         side={THREE.DoubleSide}
       />
     </mesh>
