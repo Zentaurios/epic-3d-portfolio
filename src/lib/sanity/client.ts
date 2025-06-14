@@ -5,7 +5,7 @@ import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 export const client = createClient({
   projectId: 'ntqs7f5z',
   dataset: 'production',
-  useCdn: process.env.NODE_ENV === 'production', // Enable CDN only in production
+  useCdn: false, // Disabled for faster updates - enable later for performance
   apiVersion: '2025-02-06',
   // Add perspective for published content only in production
   perspective: process.env.NODE_ENV === 'production' ? 'published' : 'drafts',

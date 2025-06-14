@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "sanity": "sanity dev",
-    "dev:all": "concurrently \"npm run dev\" \"npm run sanity\""
+    "dev:all": "concurrently \"npm run dev\" \"npm run sanity\"",
+    "import:resume": "npx tsx scripts/import-resume.ts",
+    "import:resume:category": "npx tsx scripts/import-resume.ts --create-category",
+    "fix:visibility": "npx tsx scripts/fix-visibility.ts"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^15.0.0",
@@ -51,6 +54,8 @@
     "eslint": "^8",
     "eslint-config-next": "15.3.3",
     "prettier": "^3.2.5",
-    "typescript": "^5"
+    "typescript": "^5",
+    "tsx": "^4.19.2",
+    "dotenv": "^16.4.7"
   }
 }

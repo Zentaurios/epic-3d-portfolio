@@ -4,6 +4,9 @@ import { BlogPost, Project } from '@/types'
 import ServerContent from '@/components/layout/ServerContent'
 import ClientEnhancement from '@/components/3d/ClientEnhancement'
 
+// Enable ISR - revalidate every 60 seconds
+export const revalidate = 60
+
 // Generate metadata for SEO and social sharing
 export const metadata: Metadata = {
   title: "Webb3Fitty - Revolutionary Web3 & AI Developer Portfolio",

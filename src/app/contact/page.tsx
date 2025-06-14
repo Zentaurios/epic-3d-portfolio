@@ -149,7 +149,7 @@ const ContactPage = () => {
                 {/* Additional Info */}
                 <div className="mt-12 text-center">
                     <p className="max-w-2xl mx-auto text-gray-400">
-                        Ready to bring your ideas to life? Let`&apos;`s discuss your project and create something amazing together. 
+                        Ready to bring your ideas to life? Let&apos;s discuss your project and create something amazing together. 
                         Choose your preferred contact method above to get started.
                     </p>
                 </div>
