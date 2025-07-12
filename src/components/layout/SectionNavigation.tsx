@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { useLenisScroll } from '@/lib/hooks/useLenisScroll'
+import { useUnifiedScrollHook } from '@/lib/hooks/useLenisScroll'
 
 interface SectionNavigationProps {
   activeSection?: string
@@ -33,7 +33,7 @@ export function SectionNavigation({ activeSection: propActiveSection }: SectionN
   const [activeSection, setActiveSection] = useState(propActiveSection || '')
 
   // Use the scroll hook with section change detection
-  const { scrollToSection } = useLenisScroll({
+  const { scrollToSection } = useUnifiedScrollHook({
     onSectionChange: (section) => {
       setActiveSection(section)
     }

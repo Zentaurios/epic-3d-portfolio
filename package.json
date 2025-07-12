@@ -20,10 +20,9 @@
     "@react-three/drei": "^10.0.0-rc.3",
     "@react-three/fiber": "^9.0.0-rc.10",
     "@sanity/client": "^6.12.3",
-    "@sanity/code-input": "^5.1.2",
+    "@sanity/code-input": "^2.9.0",
     "@sanity/image-url": "^1.0.2",
-    "@sanity/vision": "latest",
-    "@studio-freight/lenis": "^1.0.42",
+    "@sanity/vision": "^2.2.6",
     "@types/three": "^0.161.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -36,7 +35,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-intersection-observer": "^9.8.1",
-    "sanity": "^3.91.0",
+    "sanity": "^2.36.6",
     "sharp": "^0.33.2",
     "styled-components": "^6.1.18",
     "tailwind-merge": "^2.2.1",
@@ -51,11 +50,11 @@
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "autoprefixer": "^10.4.21",
+    "dotenv": "^16.4.7",
     "eslint": "^8",
     "eslint-config-next": "15.3.3",
     "prettier": "^3.2.5",
-    "typescript": "^5",
     "tsx": "^4.19.2",
-    "dotenv": "^16.4.7"
+    "typescript": "^5"
   }
 }

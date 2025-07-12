@@ -320,18 +320,4 @@ declare global {
   interface Navigator {
     deviceMemory?: number
   }
-  
-  interface Window {
-    lenis?: {
-      scrollTo: (target: number | string | HTMLElement, options?: {
-        duration?: number
-        easing?: (t: number) => number
-        offset?: number
-        immediate?: boolean
-      }) => void
-      on: (event: string, callback: (...args: unknown[]) => void) => void
-      off: (event: string, callback: (...args: unknown[]) => void) => void
-      destroy: () => void
-    }
-  }
 }

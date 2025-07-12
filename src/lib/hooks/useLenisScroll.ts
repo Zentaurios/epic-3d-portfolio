@@ -1,52 +1,14 @@
 'use client'
 
 import { useEffect, useCallback } from 'react'
+import { useUnifiedScroll } from '@/components/providers/UnifiedScrollProvider'
 
-interface UseLenisScrollOptions {
+interface UseUnifiedScrollOptions {
   onSectionChange?: (section: string) => void
 }
 
-export function useLenisScroll({ onSectionChange }: UseLenisScrollOptions = {}) {
-  // Scroll to section using Lenis or native scroll
-  const scrollToSection = useCallback((elementId: string, offset: number = 0) => {
-    const element = document.getElementById(elementId)
-    if (!element) return
-
-    const lenis = window.lenis
-    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(navigator.userAgent.toLowerCase()) ||
-                    ('ontouchstart' in window && window.innerWidth <= 768)
-    
-    if (lenis && !isMobile) {
-      lenis.scrollTo(element, {
-        offset,
-        duration: 1.2,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-      })
-    } else {
-      // Use native scrollIntoView for mobile or when Lenis is not available
-      const elementTop = element.offsetTop + offset
-      window.scrollTo({
-        top: elementTop,
-        behavior: 'smooth',
-      })
-    }
-  }, [])
-
-  // Scroll to top
-  const scrollToTop = useCallback(() => {
-    const lenis = window.lenis
-    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(navigator.userAgent.toLowerCase()) ||
-                    ('ontouchstart' in window && window.innerWidth <= 768)
-    
-    if (lenis && !isMobile) {
-      lenis.scrollTo(0, {
-        duration: 1.5,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-      })
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    }
-  }, [])
+export function useUnifiedScrollHook({ onSectionChange }: UseUnifiedScrollOptions = {}) {
+  const { scrollToSection, scrollToTop } = useUnifiedScroll()
 
   // Set up section intersection observer
   useEffect(() => {
@@ -72,26 +34,6 @@ export function useLenisScroll({ onSectionChange }: UseLenisScrollOptions = {}) 
 
     return () => observer.disconnect()
   }, [onSectionChange])
-
-  // Listen to Lenis scroll events
-  useEffect(() => {
-    const lenis = window.lenis
-    const isMobile = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile|tablet/i.test(navigator.userAgent.toLowerCase()) ||
-                    ('ontouchstart' in window && window.innerWidth <= 768)
-    
-    if (!lenis || isMobile) return
-
-    const handleScroll = () => {
-      // You can add custom scroll behaviors here
-      // For example, parallax effects or scroll-triggered animations
-    }
-
-    lenis.on('scroll', handleScroll)
-
-    return () => {
-      lenis.off('scroll', handleScroll)
-    }
-  }, [])
 
   return {
     scrollToSection,
