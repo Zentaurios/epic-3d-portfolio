@@ -42,6 +42,15 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   
+  // SEO and crawlability improvements
+  trailingSlash: false,
+  generateEtags: true,
+  
+  // Experimental features for better SEO
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
+  
   // Environment variables
   env: {
     SANITY_PROJECT_ID: process.env.SANITY_PROJECT_ID,

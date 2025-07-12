@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
+import { UnifiedScrollProvider } from "@/components/providers/UnifiedScrollProvider";
 import { ServiceWorkerProvider } from "@/components/providers/ServiceWorkerProvider";
 import { MobileDetectionProvider } from "@/components/providers/MobileDetectionProvider";
 import { LayeredBrainSystem } from "@/components/3d/LayeredBrainSystem";
@@ -183,7 +183,7 @@ export default function RootLayout({
         <ServiceWorkerProvider />
         <MobileDetectionProvider>
           <AIAgentProvider>
-            <SmoothScrollProvider>
+            <UnifiedScrollProvider>
               {/* Layered Brain System - Real anatomical brain with z-index layering */}
               <LayeredBrainSystem>
                 <div className="relative z-10 main-layout-wrapper">
@@ -203,7 +203,7 @@ export default function RootLayout({
               <AIAgentButton />
               <AIAgentChat />
             
-            </SmoothScrollProvider>
+            </UnifiedScrollProvider>
           </AIAgentProvider>
         </MobileDetectionProvider>
       </body>
